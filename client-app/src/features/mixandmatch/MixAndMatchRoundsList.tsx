@@ -13,12 +13,7 @@ interface Props {
 
 export default function MixAndMatchRoundsList({round, activity}: Props){
 
-  round.games.forEach(function (item) {  
-    
-    item.teamOne=activity.attendees;
-    item.teamTwo=activity.attendees;
-
-});  
+  
 
 
 
@@ -32,7 +27,7 @@ return (
                 color='teal'
                 style={{ border: 'none' }}
             >
-                <Header>{round.id}</Header>
+                <Header>Round {round.id}</Header>
             
         
 

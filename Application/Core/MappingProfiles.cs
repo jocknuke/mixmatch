@@ -1,5 +1,6 @@
 using Application.Activities;
 using Application.Comments;
+using Application.MixAndMatch;
 using Application.Profiles;
 using Domain;
 
@@ -40,6 +41,15 @@ namespace Application.Core
                 .ForMember(d => d.Category, o => o.MapFrom(s => s.Activity.Category))
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s =>
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
+
+                   
+
+                CreateMap<MixAndMatchPlayer, PlayerDto>()
+                .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
+                .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
+                .ForMember(d => d.Gender, o => o.MapFrom(s => s.AppUser.Gender))
+                .ForMember(d => d.Image, o => o.MapFrom(s => s.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url));
+              
         }
     }
 }

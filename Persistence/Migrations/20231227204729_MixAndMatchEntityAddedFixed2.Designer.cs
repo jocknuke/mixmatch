@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231227204729_MixAndMatchEntityAddedFixed2")]
+    partial class MixAndMatchEntityAddedFixed2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -60,9 +63,19 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsHost")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("MixAndMatchGameId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("MixAndMatchGameId1")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("AppUserId", "ActivityId");
 
                     b.HasIndex("ActivityId");
+
+                    b.HasIndex("MixAndMatchGameId");
+
+                    b.HasIndex("MixAndMatchGameId1");
 
                     b.ToTable("ActivityAttendees");
                 });
@@ -202,27 +215,6 @@ namespace Persistence.Migrations
                     b.HasIndex("ActivityId");
 
                     b.ToTable("MixAndMatchGames");
-                });
-
-            modelBuilder.Entity("Domain.MixAndMatchPlayer", b =>
-                {
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Team")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AppUserId", "GameId");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("MixAndMatchPlayers");
                 });
 
             modelBuilder.Entity("Domain.Photo", b =>
@@ -403,6 +395,14 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.MixAndMatchGame", null)
+                        .WithMany("TeamOne")
+                        .HasForeignKey("MixAndMatchGameId");
+
+                    b.HasOne("Domain.MixAndMatchGame", null)
+                        .WithMany("TeamTwo")
+                        .HasForeignKey("MixAndMatchGameId1");
+
                     b.Navigation("Activity");
 
                     b.Navigation("AppUser");
@@ -427,31 +427,12 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.MixAndMatchGame", b =>
                 {
                     b.HasOne("Domain.Activity", "Activity")
-                        .WithMany("ActivityMixAndMatchGames")
+                        .WithMany("MixAndMatchGames")
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Activity");
-                });
-
-            modelBuilder.Entity("Domain.MixAndMatchPlayer", b =>
-                {
-                    b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany("Players")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.MixAndMatchGame", "Game")
-                        .WithMany("Teams")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("Domain.Photo", b =>
@@ -533,11 +514,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Activity", b =>
                 {
-                    b.Navigation("ActivityMixAndMatchGames");
-
                     b.Navigation("Attendees");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("MixAndMatchGames");
                 });
 
             modelBuilder.Entity("Domain.AppUser", b =>
@@ -549,13 +530,13 @@ namespace Persistence.Migrations
                     b.Navigation("Followings");
 
                     b.Navigation("Photos");
-
-                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("Domain.MixAndMatchGame", b =>
                 {
-                    b.Navigation("Teams");
+                    b.Navigation("TeamOne");
+
+                    b.Navigation("TeamTwo");
                 });
 #pragma warning restore 612, 618
         }

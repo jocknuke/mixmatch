@@ -24,7 +24,7 @@ export default observer(function ActivityDashboard() {
     }, [loadActivities])
 
     return (
-        <Grid>
+        <Grid stackable>
             <Grid.Column width='10'>
                 {activityStore.loadingInitial && !loadingNext ? (
                     <>

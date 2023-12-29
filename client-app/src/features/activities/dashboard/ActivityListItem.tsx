@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
-import { Item, Button, Icon, Segment, Label } from "semantic-ui-react";
+import { Item, Button, Icon, Image, Segment, Label } from "semantic-ui-react";
 import { Activity } from "../../../app/models/activity";
 import ActivityListItemAttendee from "./ActivityListItemAttendee";
 
@@ -8,21 +8,40 @@ interface Props {
     activity: Activity
 }
 
+const activityImageStyle = {
+    filter: 'brightness(50%)',
+    hieght: '50px important!'
+};
+
+const activityImageTextStyle = {
+    position: 'absolute',
+    bottom: '5%',
+    left: '5%',
+    width: '100%',
+    height: 'auto',
+    color: 'white'
+};
+
+
 export default function ActivityListItem({ activity }: Props) {
     return (
+
+        
         <Segment.Group>
             <Segment>
                 {activity.isCancelled &&
                     <Label attached='top' color='red' content='Cancelled' style={{ textAlign: 'center' }} />}
+                     <Image src={`/assets/categoryImages/${activity.category}.jpg`} fluid style={activityImageStyle} />
+
+                     <Segment style={activityImageTextStyle} basic>
                 <Item.Group>
                     <Item>
-                        <Item.Image style={{marginBottom: 5}} size='tiny' circular 
-                            src={activity.host?.image || '/assets/user.png'} />
+                    
                         <Item.Content>
-                            <Item.Header as={Link} to={`/activities/${activity.id}`}>
+                            <Item.Header style={{ color: 'white' }} as={Link} to={`/activities/${activity.id}`}>
                                 {activity.title}
                             </Item.Header>
-                            <Item.Description>Hosted by <Link to={`/profiles/${activity.hostUsername}`}>{activity.host?.displayName}</Link></Item.Description>
+                            <Item.Description style={{ color: 'white' }}>Hosted by <Link to={`/profiles/${activity.hostUsername}`}>{activity.host?.displayName}</Link></Item.Description>
                             {activity.isHost && (
                                 <Item.Description>
                                     <Label basic color='orange'>
@@ -40,6 +59,7 @@ export default function ActivityListItem({ activity }: Props) {
                         </Item.Content>
                     </Item>
                 </Item.Group>
+                </Segment>
             </Segment>
             <Segment>
                 <span>

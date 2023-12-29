@@ -9,9 +9,9 @@ export const courtsNumberOptions = [
 
 
 export const roundTypeOptions = [
-    {text: 'Coed', value: 1},
-    {text: 'Girls', value: 2},
-    {text: 'Boys', value: 3},
+    {text: 'Default Coed', value: 1},
+    {text: 'Girls Only', value: 2},
+    {text: 'Boys Only', value: 3},
     {text: 'Playoffs Coed', value: 4}
 ]
 

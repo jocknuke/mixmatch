@@ -6,6 +6,7 @@ export interface MixAndMatchRound {
     
     id: number;
     courtsTotal: number;
+    roundType:number;
     games:MixAndMatchGame[];
 }
 

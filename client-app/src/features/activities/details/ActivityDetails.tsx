@@ -1,100 +1,35 @@
-import { Grid } from "semantic-ui-react";
+import { Grid, Header, Sticky } from "semantic-ui-react";
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import ActivityDetailedChat from "./ActivityDetailedChat";
 import ActivityDetailedHeader from "./ActivityDetailedHeader";
 import ActivityDetailedInfo from "./ActivityDetailedInfo";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
 import MixAndMatchRoundsList from "../../mixandmatch/MixAndMatchRoundsList";
-import { MixAndMatchRound } from "../../../app/models/mixandmatchround";
+import { MixAndMatchGame, MixAndMatchRound } from "../../../app/models/mixandmatchround";
 import { Activity } from "../../../app/models/activity";
 import { Profile } from "../../../app/models/profile";
 import MixAndMatchForm from "../../mixandmatch/form/MixAndMatchForm";
+
+
+
 
 export default observer(function ActivityDetails() {
     const { activityStore } = useStore();
     const { selectedActivity: activity, loadActivity, loadingInitial, clearSelectedActivity } = activityStore;
     const { id } = useParams();
 
-
+     
        
 
-        const initinalgames= [
+        const initinalgames:MixAndMatchRound[]= [
 
-            { 
-                id:1,
-                 roundType:1,
-                  
-                 courtsTotal:6,
-                 games: [
-
-                    { 
-                        id:1,
-                        roundid:1,
-                        courtid:1,
-                        teamOne:[],
-                        teamTwo:[],
-                        completed: false,
-                        teamOneScore:0,
-                        teamTwoScore:0,
-
-
-                    },
-                    { 
-                        id:2,
-                        roundid:1,
-                        courtid:2,
-                        teamOne:[],
-                        teamTwo:[],
-                        completed: false,
-                        teamOneScore:0,
-                        teamTwoScore:0,
-
-
-                    }
-                    ,
-                    { 
-                        id:3,
-                        roundid:1,
-                        courtid:3,
-                        teamOne:[],
-                        teamTwo:[],
-                        completed: false,
-                        teamOneScore:0,
-                        teamTwoScore:0,
-
-
-                    }
-                 ]
-  
-
-            },
-            { 
-                id:2,
-                roundType:1,
-                  
-                 courtsTotal:6,
-                 games: [
-
-                    { 
-                        id:2,
-                        roundid:2,
-                        courtid:1,
-                        teamOne:[],
-                        teamTwo:[],
-                        completed: false,
-                        teamOneScore:0,
-                        teamTwoScore:0,
-
-
-                    }
-                 ]
-  
-
-            }
+            
+        
+            
 
 
         ];
@@ -111,29 +46,60 @@ export default observer(function ActivityDetails() {
 
 
 
-    const handleAddRound = () => {
-        setRounds((prevFriends) => [
-            ...prevFriends,
+
+    const handleAddRound = (thisround:MixAndMatchRound) => {
+
+
+        const people= [...activity.attendees];
+
+        people.sort( () => Math.random() - 0.5);
+
+
+        let mygames:MixAndMatchGame[]=[];
+
+       
+
+        for (let i = 1; i < thisround.courtsTotal+1; i++) {
+           
+
+
+            mygames.push({ 
+                id:i,
+                roundid:thisround.id,
+                courtid:i,
+                teamOne:[],
+                teamTwo:[],
+                completed: false,
+                teamOneScore:0,
+                teamTwoScore:0,
+  
+  
+            })
+
+            
+             
+
+        }
+
+
+        mygames.forEach(element => {
+
+            element.teamOne=people.slice(0, 6);
+            element.teamTwo=people.slice(0, 6);
+            
+        });
+
+
+      
+
+        setRounds((prevRounds) => [
+            ...prevRounds,
             {
-                id:3,
-                roundType:2,
+                id:round.length+1,
+                roundType:thisround.roundType,
                   
-                 courtsTotal:6,
-                 games: [
-
-                    { 
-                        id:3,
-                        roundid:2,
-                        courtid:1,
-                        teamOne:[],
-                        teamTwo:[],
-                        completed: false,
-                        teamOneScore:0,
-                        teamTwoScore:0,
-
-
-                    }
-                 ]
+                 courtsTotal:thisround.courtsTotal,
+                 games: mygames,
             },
         ]);
     };
@@ -155,8 +121,17 @@ export default observer(function ActivityDetails() {
 
             </Grid.Column>
             <Grid.Column width='6'>
-                <ActivityDetailedSidebar activity={activity}/>
-                <MixAndMatchForm createRound={handleAddRound}/>
+            <Sticky>
+              
+            {
+ activity.category=='mixandmatch' && (<MixAndMatchForm createRound={handleAddRound}/>)
+}
+              </Sticky>
+               
+
+
+<ActivityDetailedSidebar activity={activity}/>
+
             </Grid.Column>
         </Grid>
     )

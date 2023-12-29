@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, List, Divider, Feed } from "semantic-ui-react";
+import { Card, Image, List, Divider, Feed, Grid, Input, Header, Icon } from "semantic-ui-react";
 import { MixAndMatchGame } from "../../app/models/mixandmatchround";
 import { Profile } from "../../app/models/profile";
 import { Link } from 'react-router-dom';
@@ -16,11 +16,16 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
     <Card>
       <Card.Content>
-        <Card.Header> {game.courtid}</Card.Header>
+        <Card.Header> Court {game.courtid}</Card.Header>
       </Card.Content>
 
       <Card.Content>
-        <Feed>
+      <Grid columns={2} divided>
+    <Grid.Row>
+      <Grid.Column>
+        
+
+      <Feed>
           {game.teamOne?.map(attendee => (
 
             <Feed.Event>
@@ -43,11 +48,18 @@ export default function MixAndMatchListItemGame({ game }: Props) {
             </Feed.Event>
 
 
+
+
           ))}
         </Feed>
 
-        <div className="ui divider"></div>
-        <Feed>
+        
+     
+     
+      </Grid.Column>
+      <Grid.Column>
+       
+      <Feed>
           {game.teamTwo?.map(attendee => (
 
             <Feed.Event>
@@ -72,6 +84,39 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
           ))}
         </Feed>
+       
+        
+       
+      </Grid.Column>
+      
+    </Grid.Row>
+</Grid>
+<Divider horizontal>
+      <Header as='h4'>
+        
+        Score
+      </Header>
+    </Divider>
+<Card.Content>
+
+<Grid columns={2} divided>
+    <Grid.Row>
+      <Grid.Column>
+      <Input style={{ width: '60px' }} placeholder='0' />
+      </Grid.Column>
+      <Grid.Column>
+      <Input style={{ width: '60px' }} placeholder='0' />
+      </Grid.Column>
+    
+    </Grid.Row>
+
+    </Grid>
+  
+      
+       
+      </Card.Content>
+
+       
       </Card.Content>
     </Card>
 
