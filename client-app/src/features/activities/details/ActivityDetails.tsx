@@ -13,6 +13,8 @@ import { MixAndMatchGame, MixAndMatchRound } from "../../../app/models/mixandmat
 import { Activity } from "../../../app/models/activity";
 import { Profile } from "../../../app/models/profile";
 import MixAndMatchForm from "../../mixandmatch/form/MixAndMatchForm";
+import MixAndMatchPlayersSidebar from "../../mixandmatch/MixAndMatchPlayersSidebar";
+
 
 
 
@@ -52,7 +54,7 @@ export default observer(function ActivityDetails() {
 
         const people= [...activity.attendees];
 
-        people.sort( () => Math.random() - 0.5);
+        
 
 
         let mygames:MixAndMatchGame[]=[];
@@ -81,13 +83,68 @@ export default observer(function ActivityDetails() {
 
         }
 
+        people.sort( () => Math.random() - 0.5);
+        
+        let halfwayThrough = Math.floor(people.length / 2)
+// or instead of floor you can use ceil depending on what side gets the extra data
 
-        mygames.forEach(element => {
+        let arrayFirstHalf = people.slice(0, halfwayThrough);
+        let arraySecondHalf = people.slice(halfwayThrough, people.length);
 
-            element.teamOne=people.slice(0, 6);
-            element.teamTwo=people.slice(0, 6);
+
+        
+
+
+        while (arrayFirstHalf.length>0) {
+            mygames.forEach(element => {
+
+                if(arrayFirstHalf.length!=0){
+    
+    
+    
+                    element.teamOne.push(arrayFirstHalf.splice(0,1)[0]);
+    
+                    }       
+    
+                   
+                    
+                });
+    
+
+
+          }
+
             
-        });
+           
+        
+
+          while (arraySecondHalf.length>0) {
+
+            mygames.forEach(element => {
+
+
+                if(arraySecondHalf.length!=0){
+
+
+
+                    element.teamTwo.push(arraySecondHalf.splice(0,1)[0]);
+    
+                    }    
+
+                
+                
+            });
+        
+        
+        }
+
+            
+
+            
+        
+
+             let newgames=mygames.filter(x=>x.teamOne.length>0 || x.teamTwo.length>0);
+        
 
 
       
@@ -99,13 +156,16 @@ export default observer(function ActivityDetails() {
                 roundType:thisround.roundType,
                   
                  courtsTotal:thisround.courtsTotal,
-                 games: mygames,
+                 games: newgames,
             },
         ]);
+
+        const div = document.getElementById('root');
+        div!.scrollIntoView({ behavior: "smooth", block: "end" })
+        
     };
 
-
-    
+  
 
     return (
         <Grid>
@@ -129,8 +189,13 @@ export default observer(function ActivityDetails() {
               </Sticky>
                
 
+              {
+ activity.category=='mixandmatch' ? (<MixAndMatchPlayersSidebar activity={activity}/>):(<ActivityDetailedSidebar activity={activity}/>)
+}
 
-<ActivityDetailedSidebar activity={activity}/>
+
+
+
 
             </Grid.Column>
         </Grid>

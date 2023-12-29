@@ -1,13 +1,14 @@
-import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
+import { Segment, List, Label, Item, Image, Feed, Table, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import { Activity } from '../../../app/models/activity'
+import { Activity } from '../../app/models/activity'
+
 
 interface Props {
     activity: Activity
 }
 
-export default observer(function ActivityDetailedSidebar ({activity: {attendees, host}}: Props) {
+export default observer(function MixAndMatchPlayersSidebar ({activity: {attendees, host}}: Props) {
     if (!attendees) return null;
     return (
         <>
@@ -21,18 +22,32 @@ export default observer(function ActivityDetailedSidebar ({activity: {attendees,
             >
                 {attendees.length} {attendees.length === 1 ? 'Person' : 'People'} going
             </Segment>
-            <Segment attached  style={{overflow: 'auto', maxHeight: 600 }}>
-                <List relaxed divided style={{width:'95%'}}>
-                    {attendees.map(attendee => (
-                        <Item key={attendee.username} style={{ position: 'relative' }}>
-                            {attendee.username === host?.username &&
-                            <Label
-                                style={{ position: 'absolute' }}
-                                color='orange'
-                                ribbon='right'
-                            >
-                                Host
-                            </Label>}
+            <Segment attached style={{overflow: 'auto', maxHeight: 600 }}>
+
+            <Table style={{width:'100%'}} basic='very' celled collapsing>
+    <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell>Player</Table.HeaderCell>
+        <Table.HeaderCell>Score</Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+
+    <Table.Body>
+
+    {attendees.map(attendee => (
+
+<Table.Row>
+   
+                        
+                        
+                   
+
+
+     
+        <Table.Cell>
+        
+        <Item key={attendee.username} style={{ position: 'relative' }}>
+                            
                             <Image size='mini' src={'/assets/user.png'} />
                             <Item.Content verticalAlign='middle'>
                                 <Item.Header >
@@ -42,8 +57,30 @@ export default observer(function ActivityDetailedSidebar ({activity: {attendees,
                                 <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>}
                             </Item.Content>
                         </Item>
-                    ))}
+
+         
+        </Table.Cell>
+        <Table.Cell>
+
+
+21
+
+
+        </Table.Cell>
+      </Table.Row>
+
+))}
+
+
+
+
+</Table.Body>
+</Table>
+            <Feed>
+                <List relaxed divided>
+                   
                 </List>
+                </Feed>
             </Segment>
         </>
 
