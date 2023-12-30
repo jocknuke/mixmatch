@@ -19,6 +19,7 @@ namespace Application.Core
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
                 .ForMember(d => d.Bio, o => o.MapFrom(s => s.AppUser.Bio))
+                .ForMember(d => d.Gender, o => o.MapFrom(s => s.AppUser.Gender))
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url))
                 .ForMember(d => d.FollowersCount, o => o.MapFrom(s => s.AppUser.Followers.Count))
                 .ForMember(d => d.FollowingCount, o => o.MapFrom(s => s.AppUser.Followings.Count))
@@ -42,7 +43,15 @@ namespace Application.Core
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s =>
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName));
 
-                   
+               CreateMap<MixAndMatchGame, MixAndMatchDto>()
+               .ForMember(d=>d.Players, o => o.MapFrom(s => s.Players))
+                 .ForMember(d => d.CourtNumber, o => o.MapFrom(s => s.CourtNumber))
+                  .ForMember(d => d.IsPlayoff, o => o.MapFrom(s => s.IsPlayoff))
+                   .ForMember(d => d.Completed, o => o.MapFrom(s => s.Completed))
+                  .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+                   .ForMember(d => d.RoundId, o => o.MapFrom(s => s.RoundId))
+                  .ForMember(d => d.TeamOneScore, o => o.MapFrom(s => s.TeamOneScore))
+                  .ForMember(d => d.TeamTwoScore, o => o.MapFrom(s => s.TeamTwoScore));
 
                 CreateMap<MixAndMatchPlayer, PlayerDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))

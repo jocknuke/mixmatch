@@ -8,7 +8,13 @@ interface Props {
     activity: Activity
 }
 
+
 export default observer(function MixAndMatchPlayersSidebar ({activity: {attendees, host}}: Props) {
+    const styles = {
+        borderColor: 'violet',
+        borderWidth: 3,
+       
+      }
     if (!attendees) return null;
     return (
         <>
@@ -48,7 +54,12 @@ export default observer(function MixAndMatchPlayersSidebar ({activity: {attendee
         
         <Item key={attendee.username} style={{ position: 'relative' }}>
                             
-                            <Image size='mini' src={'/assets/user.png'} />
+                            <Image 
+                             style={attendee.gender=='F' ? styles : null}
+                             bordered
+                             circular
+                            size='mini' 
+                            src={'/assets/user.png'} />
                             <Item.Content verticalAlign='middle'>
                                 <Item.Header >
                                     <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link>

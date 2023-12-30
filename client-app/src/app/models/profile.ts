@@ -8,14 +8,17 @@ export interface Profile {
     followersCount: number;
     followingCount: number;
     following: boolean;
-    photos?: Photo[]
+    photos?: Photo[];
+    gender?:string;
 }
 
 export class Profile implements Profile {
     constructor(user: User) {
         this.username = user.username;
         this.displayName = user.displayName;
-        this.image = user.image
+        this.image = user.image;
+        this.gender=user.gender;
+        
     }
 }
 

@@ -13,7 +13,7 @@ namespace Domain
         public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-        public ICollection<MixAndMatchGame> ActivityMixAndMatchGames { get; set; } = new List<MixAndMatchGame>();
+        public ICollection<MixAndMatchGame> MixAndMatchGames { get; set; } = new List<MixAndMatchGame>();
 
 
 

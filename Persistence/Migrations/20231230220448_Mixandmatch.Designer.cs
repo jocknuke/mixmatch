@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231228032228_MixAndMatchEntityAddedFixed6")]
-    partial class MixAndMatchEntityAddedFixed6
+    [Migration("20231230220448_Mixandmatch")]
+    partial class Mixandmatch
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -188,9 +188,6 @@ namespace Persistence.Migrations
                     b.Property<bool>("IsPlayoff")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("MyProperty")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("RoundId")
                         .HasColumnType("INTEGER");
 
@@ -225,7 +222,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("MixAndMatchPlayer");
+                    b.ToTable("MixAndMatchPlayers");
                 });
 
             modelBuilder.Entity("Domain.Photo", b =>
@@ -430,7 +427,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.MixAndMatchGame", b =>
                 {
                     b.HasOne("Domain.Activity", "Activity")
-                        .WithMany("ActivityMixAndMatchGames")
+                        .WithMany("MixAndMatchGames")
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -447,7 +444,7 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.MixAndMatchGame", "Game")
-                        .WithMany("Teams")
+                        .WithMany("Players")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -536,11 +533,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Activity", b =>
                 {
-                    b.Navigation("ActivityMixAndMatchGames");
-
                     b.Navigation("Attendees");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("MixAndMatchGames");
                 });
 
             modelBuilder.Entity("Domain.AppUser", b =>
@@ -558,7 +555,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.MixAndMatchGame", b =>
                 {
-                    b.Navigation("Teams");
+                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }

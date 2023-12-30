@@ -62,7 +62,7 @@ namespace Persistence
 
                  builder.Entity<MixAndMatchGame>()
                 .HasOne(a => a.Activity)
-                .WithMany(m => m.ActivityMixAndMatchGames)
+                .WithMany(m => m.MixAndMatchGames)
                 .HasForeignKey(aa => aa.ActivityId);
 
           

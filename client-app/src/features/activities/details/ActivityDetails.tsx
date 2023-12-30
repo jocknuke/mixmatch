@@ -85,26 +85,16 @@ export default observer(function ActivityDetails() {
 
         people.sort( () => Math.random() - 0.5);
         
-        let halfwayThrough = Math.floor(people.length / 2)
-// or instead of floor you can use ceil depending on what side gets the extra data
-
-        let arrayFirstHalf = people.slice(0, halfwayThrough);
-        let arraySecondHalf = people.slice(halfwayThrough, people.length);
+        people.sort((a, b) => (a.gender! > b.gender!) ? 1 : -1)
 
 
-        
-
-
-        while (arrayFirstHalf.length>0) {
+        while (people.length>0) {
             mygames.forEach(element => {
 
-                if(arrayFirstHalf.length!=0){
+              
+                    element.teamOne.push(people.splice(0,1)[0]);
     
-    
-    
-                    element.teamOne.push(arrayFirstHalf.splice(0,1)[0]);
-    
-                    }       
+                    element.teamTwo.push(people.splice(0,1)[0]);
     
                    
                     
@@ -118,25 +108,6 @@ export default observer(function ActivityDetails() {
            
         
 
-          while (arraySecondHalf.length>0) {
-
-            mygames.forEach(element => {
-
-
-                if(arraySecondHalf.length!=0){
-
-
-
-                    element.teamTwo.push(arraySecondHalf.splice(0,1)[0]);
-    
-                    }    
-
-                
-                
-            });
-        
-        
-        }
 
             
 

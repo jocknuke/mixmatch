@@ -10,7 +10,15 @@ interface Props {
 
 }
 
+
+
 export default function MixAndMatchListItemGame({ game }: Props) {
+
+  const styles = {
+    borderColor: 'violet',
+    borderWidth: 3,
+   
+  }
 
   return (
 
@@ -34,7 +42,7 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
               <Feed.Label >
                 <Image size='mini'
-
+                  style={attendee.gender=='F' ? styles : null}
                   bordered
                   circular
                   src={attendee.image || `/assets/user.png`} />
@@ -68,7 +76,7 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
               <Feed.Label >
                 <Image size='mini'
-
+ style={attendee.gender=='F' ? styles : null}
                   bordered
                   circular
                   src={attendee.image || `/assets/user.png`} />
@@ -102,10 +110,10 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 <Grid columns={2} divided>
     <Grid.Row>
       <Grid.Column>
-      <Input style={{ width: '60px' }} placeholder='0' />
+      <Input style={{ width: '50%' }} value={game.teamOneScore} placeholder='0' />
       </Grid.Column>
       <Grid.Column>
-      <Input style={{ width: '60px' }} placeholder='0' />
+      <Input style={{ width: '50%' }} value={game.teamTwoScore}  placeholder='0' />
       </Grid.Column>
     
     </Grid.Row>

@@ -20,9 +20,6 @@ namespace Application.MixAndMatch
             public MixAndMatchGame MixAndMatchGame { get; set; }
 
 
-
-
-
         }
 
        
@@ -52,7 +49,9 @@ namespace Application.MixAndMatch
             {
 
                 var activity = await _context.Activities
-                    .Include(x => x.Attendees)
+                    .Include(x => x.MixAndMatchGames)
+                    
+                    
                     .FirstOrDefaultAsync(x => x.Id == request.ActivityId);
 
 
@@ -62,7 +61,7 @@ namespace Application.MixAndMatch
                     x.UserName == _userAccessor.GetUsername());
 
 
-                activity.ActivityMixAndMatchGames.Add(request.MixAndMatchGame);
+                activity.MixAndMatchGames.Add(request.MixAndMatchGame);
 
                 
 
