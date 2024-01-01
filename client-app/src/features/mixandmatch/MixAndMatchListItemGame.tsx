@@ -1,15 +1,13 @@
-import React from 'react';
-import { Card, Image, List, Divider, Feed, Grid, Input, Header, Icon } from "semantic-ui-react";
+
+import { Card, Image, Divider, Feed, Grid, Input, Header } from "semantic-ui-react";
 import { MixAndMatchGame } from "../../app/models/mixandmatchround";
-import { Profile } from "../../app/models/profile";
-import { Link } from 'react-router-dom';
+
 
 interface Props {
   game: MixAndMatchGame;
 
 
 }
-
 
 
 export default function MixAndMatchListItemGame({ game }: Props) {
@@ -34,7 +32,7 @@ export default function MixAndMatchListItemGame({ game }: Props) {
         
 
       <Feed>
-          {game.teamOne?.map(attendee => (
+          {game.players?.filter(p=>p.team===1).map(player => (
 
             <Feed.Event>
 
@@ -42,15 +40,15 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
               <Feed.Label >
                 <Image size='mini'
-                  style={attendee.gender=='F' ? styles : null}
+                  style={player.gender=='F' ? styles : null}
                   bordered
                   circular
-                  src={attendee.image || `/assets/user.png`} />
+                  src={player.image || `/assets/user.png`} />
               </Feed.Label>
               <Feed.Content>
 
                 <Feed.Summary>
-                  {`${attendee.username}`}
+                  {`${player.username}`}
                 </Feed.Summary>
               </Feed.Content>
             </Feed.Event>
@@ -68,7 +66,7 @@ export default function MixAndMatchListItemGame({ game }: Props) {
       <Grid.Column>
        
       <Feed>
-          {game.teamTwo?.map(attendee => (
+          {game.players?.filter(p=>p.team===2).map(player => (
 
             <Feed.Event>
 
@@ -76,15 +74,15 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
               <Feed.Label >
                 <Image size='mini'
- style={attendee.gender=='F' ? styles : null}
+ style={player.gender=='F' ? styles : null}
                   bordered
                   circular
-                  src={attendee.image || `/assets/user.png`} />
+                  src={player.image || `/assets/user.png`} />
               </Feed.Label>
               <Feed.Content>
 
                 <Feed.Summary>
-                  {`${attendee.username}`}
+                  {`${player.username}`}
                 </Feed.Summary>
               </Feed.Content>
             </Feed.Event>

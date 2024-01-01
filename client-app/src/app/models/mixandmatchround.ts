@@ -1,4 +1,5 @@
-import { Profile } from "./profile";
+import { Photo, Profile } from "./profile";
+import { User } from "./user";
 
 
 export interface MixAndMatchRound {
@@ -11,17 +12,44 @@ export interface MixAndMatchRound {
 }
 
 
+
   
 export interface MixAndMatchGame{
   
     id:number;
-    roundid:number;
+    roundId:number;
     courtid:number;
-    teamOne:Profile[] ;
-    teamTwo:Profile[] ;
+    players:MixAndMatchPlayer[] ;
     completed: boolean;
     teamOneScore:number;
     teamTwoScore:number;
+    isPlayoff: boolean;
+
     
   }
+
+  export interface MixAndMatchPlayer{
+    
+
+  
+    team: number;
+    username: string;
+    displayName: string;
+    image?: string;
+    gender?:string;
+
+
+  }
+
+
+  export class MixAndMatchPlayer implements MixAndMatchPlayer {
+    constructor(user: Profile) {
+        this.username = user.username;
+        this.displayName = user.displayName;
+        this.image = user.image;
+        this.gender=user.gender;
+        
+    }
+}
+  
   

@@ -9,11 +9,12 @@ import ActivityDetailedHeader from "./ActivityDetailedHeader";
 import ActivityDetailedInfo from "./ActivityDetailedInfo";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
 import MixAndMatchRoundsList from "../../mixandmatch/MixAndMatchRoundsList";
-import { MixAndMatchGame, MixAndMatchRound } from "../../../app/models/mixandmatchround";
+import { MixAndMatchGame, MixAndMatchPlayer, MixAndMatchRound } from "../../../app/models/mixandmatchround";
 import { Activity } from "../../../app/models/activity";
 import { Profile } from "../../../app/models/profile";
 import MixAndMatchForm from "../../mixandmatch/form/MixAndMatchForm";
 import MixAndMatchPlayersSidebar from "../../mixandmatch/MixAndMatchPlayersSidebar";
+import { roundTypeOptions } from "../../../app/common/options/mixandmatchOptions";
 
 
 
@@ -24,15 +25,12 @@ export default observer(function ActivityDetails() {
     const { selectedActivity: activity, loadActivity, loadingInitial, clearSelectedActivity } = activityStore;
     const { id } = useParams();
 
-     
+    
        
 
         const initinalgames:MixAndMatchRound[]= [
 
             
-        
-            
-
 
         ];
  
@@ -67,10 +65,10 @@ export default observer(function ActivityDetails() {
 
             mygames.push({ 
                 id:i,
-                roundid:thisround.id,
+                roundId:thisround.id,
                 courtid:i,
-                teamOne:[],
-                teamTwo:[],
+                players:[],
+                isPlayoff:thisround.roundType==roundTypeOptions.find(x=>x.text=='Playoffs Coed')?.value?true:false,
                 completed: false,
                 teamOneScore:0,
                 teamTwoScore:0,
@@ -91,10 +89,19 @@ export default observer(function ActivityDetails() {
         while (people.length>0) {
             mygames.forEach(element => {
 
+
+                   let player1=new MixAndMatchPlayer(people.splice(0,1)[0]);
+                   player1.team=1;
+
+                   let player2=new MixAndMatchPlayer(people.splice(0,1)[0]);
+                   player2.team=2;
+
+
+
               
-                    element.teamOne.push(people.splice(0,1)[0]);
+                    element.players.push(player1);
+                    element.players.push(player2);
     
-                    element.teamTwo.push(people.splice(0,1)[0]);
     
                    
                     
@@ -114,7 +121,7 @@ export default observer(function ActivityDetails() {
             
         
 
-             let newgames=mygames.filter(x=>x.teamOne.length>0 || x.teamTwo.length>0);
+             let newgames=mygames.filter(x=>x.players.length>0);
         
 
 
@@ -139,25 +146,24 @@ export default observer(function ActivityDetails() {
   
 
     return (
-        <Grid>
+        <Grid columns={2} stackable>
             <Grid.Column width='10'>
                 <ActivityDetailedHeader activity={activity} />
                 <ActivityDetailedInfo activity={activity} />
                 <ActivityDetailedChat activityId={activity.id} />
 
-                {round.map(round => (
-                        <MixAndMatchRoundsList activity={activity} round={round}/>
-                    ))}
+                <MixAndMatchRoundsList activity={activity} />
+                  
                
 
             </Grid.Column>
             <Grid.Column width='6'>
-            <Sticky>
+           
               
             {
  activity.category=='mixandmatch' && (<MixAndMatchForm createRound={handleAddRound}/>)
 }
-              </Sticky>
+             
                
 
               {

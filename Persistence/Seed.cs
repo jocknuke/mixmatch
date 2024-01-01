@@ -441,21 +441,82 @@ namespace Persistence
 
                  var  AllAttendees = new List<ActivityAttendee>();
 
+                var  AllAttendees2 = new List<ActivityAttendee>();
 
-               
+                 var  AllAttendees3 = new List<ActivityAttendee>();
+                  var  AllAttendees4 = new List<ActivityAttendee>();
+                 var  AllAttendees5 = new List<ActivityAttendee>();
 
                 foreach (var user in users)
                 {
                     
-                   var attendee= new ActivityAttendee
+                   
+                    
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+
+                 foreach (var user in users)
+                {
+                     var attendee= new ActivityAttendee
                             {
                                 AppUser = user,
                                 IsHost = true
                             };
                     AllAttendees.Add(attendee);
-                    
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
+
                 }
+
+                 foreach (var user in users)
+                {
+                     var attendee= new ActivityAttendee
+                            {
+                                AppUser = user,
+                                IsHost = true
+                            };
+                    AllAttendees2.Add(attendee);
+
+                }
+
+                 foreach (var user in users)
+                {
+                     var attendee= new ActivityAttendee
+                            {
+                                AppUser = user,
+                                IsHost = true
+                            };
+                    AllAttendees3.Add(attendee);
+
+                }
+
+                 foreach (var user in users)
+                {
+                     var attendee= new ActivityAttendee
+                            {
+                                AppUser = user,
+                                IsHost = true
+                            };
+                    AllAttendees4.Add(attendee);
+
+                }
+
+
+                 foreach (var user in users)
+                {
+                     var attendee= new ActivityAttendee
+                            {
+                                AppUser = user,
+                                IsHost = true
+                            };
+                    AllAttendees5.Add(attendee);
+
+                }
+
+
+               
+
+
+
+
 
                 var activities = new List<Activity>
                 {
@@ -463,7 +524,7 @@ namespace Persistence
                     {
                         Title = "Mix And Match",
                         Date = DateTime.UtcNow.AddMonths(1),
-                        Description = "Activity 1 months in the future",
+                        Description = "Activity 1 month in the future",
                         Category = "mixandmatch",
                         City = "Charlotte",
                         Venue = "CUVC",
@@ -481,7 +542,59 @@ namespace Persistence
                                     new MixAndMatchPlayer{
 
 
-                                         AppUser=AllAttendees[0].AppUser
+                                         AppUser=AllAttendees[0].AppUser,
+                                          Team=1
+                                          
+                                    }
+                                     
+
+  
+
+
+                                  }
+
+
+
+                             },
+                             new MixAndMatchGame
+                             { 
+                                 Id=2,
+                                  RoundId=1,
+                                  CourtNumber=1,
+
+                                  Players=new List<MixAndMatchPlayer>{
+
+                                    new MixAndMatchPlayer{
+
+
+                                         AppUser=AllAttendees[2].AppUser,
+                                          Team=1
+                                          
+                                    }
+                                     
+
+  
+
+
+                                  }
+
+
+
+                             },
+                             new MixAndMatchGame
+                             { 
+                                 Id=3,
+                                  RoundId=2,
+                                  CourtNumber=1,
+
+                                  Players=new List<MixAndMatchPlayer>{
+
+                                    new MixAndMatchPlayer{
+
+
+                                         AppUser=AllAttendees[0].AppUser,
+                                          Team=1
+                                          
                                     }
                                      
 
@@ -528,7 +641,7 @@ namespace Persistence
                         Category = "beachvolleyball",
                         City = "Rio",
                         Venue = "Pub",
-                        Attendees = AllAttendees
+                        Attendees = AllAttendees2
                     },
                     new Activity
                     {
@@ -538,7 +651,7 @@ namespace Persistence
                         Category = "soccer",
                         City = "London",
                         Venue = "Wembly Stadium",
-                        Attendees = AllAttendees
+                        Attendees = AllAttendees3.Take(54).ToList()
                     },
                    
                     new Activity
@@ -571,7 +684,7 @@ namespace Persistence
                         Category = "volleyball",
                         City = "Charlotte",
                         Venue = "CUVC",
-                        Attendees = AllAttendees
+                        Attendees = AllAttendees4.Take(49).ToList()
                     },
                     new Activity
                     {
@@ -581,7 +694,7 @@ namespace Persistence
                         Category = "mixandmatch",
                         City = "Charlotte",
                         Venue = "CUVC",
-                        Attendees = AllAttendees
+                        Attendees = AllAttendees5.Take(47).ToList()
                     }
                   
                    
