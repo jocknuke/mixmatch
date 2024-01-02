@@ -10,5 +10,7 @@ namespace Application.Activities
         public bool Following { get; set; }
         public int FollowersCount { get; set; }
         public int FollowingCount { get; set; }
+
+        public string AppUserId { get; set; } 
     }
 }

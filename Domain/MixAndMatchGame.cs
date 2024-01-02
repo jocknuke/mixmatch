@@ -15,13 +15,13 @@ namespace Domain
 
         public ICollection<MixAndMatchPlayer> Players { get; set; } = new List<MixAndMatchPlayer>();
 
-        public bool Completed { get; set; }
+        public bool? Completed { get; set; }
 
         public Guid ActivityId { get; set; }
 
         public Activity Activity { get; set; }
 
-        public bool IsPlayoff { get; set; }
+        public bool? IsPlayoff { get; set; }
     }
 }
 

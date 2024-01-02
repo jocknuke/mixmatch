@@ -528,87 +528,10 @@ namespace Persistence
                         Category = "mixandmatch",
                         City = "Charlotte",
                         Venue = "CUVC",
-                        Attendees = AllAttendees,
-                        MixAndMatchGames=new List<MixAndMatchGame>
-                        {
-                             new MixAndMatchGame
-                             { 
-                                 Id=1,
-                                  RoundId=1,
-                                  CourtNumber=1,
-
-                                  Players=new List<MixAndMatchPlayer>{
-
-                                    new MixAndMatchPlayer{
-
-
-                                         AppUser=AllAttendees[0].AppUser,
-                                          Team=1
-                                          
-                                    }
-                                     
-
-  
-
-
-                                  }
-
-
-
-                             },
-                             new MixAndMatchGame
-                             { 
-                                 Id=2,
-                                  RoundId=1,
-                                  CourtNumber=1,
-
-                                  Players=new List<MixAndMatchPlayer>{
-
-                                    new MixAndMatchPlayer{
-
-
-                                         AppUser=AllAttendees[2].AppUser,
-                                          Team=1
-                                          
-                                    }
-                                     
-
-  
-
-
-                                  }
-
-
-
-                             },
-                             new MixAndMatchGame
-                             { 
-                                 Id=3,
-                                  RoundId=2,
-                                  CourtNumber=1,
-
-                                  Players=new List<MixAndMatchPlayer>{
-
-                                    new MixAndMatchPlayer{
-
-
-                                         AppUser=AllAttendees[0].AppUser,
-                                          Team=1
-                                          
-                                    }
-                                     
-
-  
-
-
-                                  }
-
-
-
-                             }
-
-
-                        }
+                        Attendees = AllAttendees
+                        
+                            
+                             
                     },
                     new Activity
                     {

@@ -38,7 +38,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");
-app.MapHub<MixAndMatchHub>("/mixandmatch");
+app.MapHub<MixAndMatchHub>("/mixandmatchhub");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

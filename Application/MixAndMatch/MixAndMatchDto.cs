@@ -17,9 +17,9 @@ namespace Application.MixAndMatch
 
         public ICollection<PlayerDto> Players { get; set; } = new List<PlayerDto>();
 
-        public bool Completed { get; set; }
+        public bool? Completed { get; set; }
 
-        public bool IsPlayoff { get; set; }
+        public bool? IsPlayoff { get; set; }
         
     }
 }

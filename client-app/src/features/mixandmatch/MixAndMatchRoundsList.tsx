@@ -60,7 +60,7 @@ return (
 
   {rounds.map(([group, games]) => (
 
-    <Segment
+    <Segment key={group}
                 textAlign='center'
                 attached='top'
                 inverted
@@ -77,7 +77,7 @@ return (
 
 
     {games && games.map(match => (
-                        <MixAndMatchListItemGame game={match}/>
+                        <MixAndMatchListItemGame key={`${match.roundId}-${match.courtNumber}`} game={match}/>
                     ))}
     
       

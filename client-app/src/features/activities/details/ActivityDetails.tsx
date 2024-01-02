@@ -28,14 +28,7 @@ export default observer(function ActivityDetails() {
     
        
 
-        const initinalgames:MixAndMatchRound[]= [
-
-            
-
-        ];
- 
-
-        const [round, setRounds] = useState(initinalgames);
+      
 
     useEffect(() => {
         if (id) loadActivity(id);
@@ -44,104 +37,6 @@ export default observer(function ActivityDetails() {
 
     if (loadingInitial || !activity) return <LoadingComponent />
 
-
-
-
-    const handleAddRound = (thisround:MixAndMatchRound) => {
-
-
-        const people= [...activity.attendees];
-
-        
-
-
-        let mygames:MixAndMatchGame[]=[];
-
-       
-
-        for (let i = 1; i < thisround.courtsTotal+1; i++) {
-           
-
-
-            mygames.push({ 
-                id:i,
-                roundId:thisround.id,
-                courtid:i,
-                players:[],
-                isPlayoff:thisround.roundType==roundTypeOptions.find(x=>x.text=='Playoffs Coed')?.value?true:false,
-                completed: false,
-                teamOneScore:0,
-                teamTwoScore:0,
-  
-  
-            })
-
-            
-             
-
-        }
-
-        people.sort( () => Math.random() - 0.5);
-        
-        people.sort((a, b) => (a.gender! > b.gender!) ? 1 : -1)
-
-
-        while (people.length>0) {
-            mygames.forEach(element => {
-
-
-                   let player1=new MixAndMatchPlayer(people.splice(0,1)[0]);
-                   player1.team=1;
-
-                   let player2=new MixAndMatchPlayer(people.splice(0,1)[0]);
-                   player2.team=2;
-
-
-
-              
-                    element.players.push(player1);
-                    element.players.push(player2);
-    
-    
-                   
-                    
-                });
-    
-
-
-          }
-
-            
-           
-        
-
-
-            
-
-            
-        
-
-             let newgames=mygames.filter(x=>x.players.length>0);
-        
-
-
-      
-
-        setRounds((prevRounds) => [
-            ...prevRounds,
-            {
-                id:round.length+1,
-                roundType:thisround.roundType,
-                  
-                 courtsTotal:thisround.courtsTotal,
-                 games: newgames,
-            },
-        ]);
-
-        const div = document.getElementById('root');
-        div!.scrollIntoView({ behavior: "smooth", block: "end" })
-        
-    };
 
   
 
@@ -161,7 +56,7 @@ export default observer(function ActivityDetails() {
            
               
             {
- activity.category=='mixandmatch' && (<MixAndMatchForm createRound={handleAddRound}/>)
+ activity.category=='mixandmatch' && (<MixAndMatchForm activity={activity}/>)
 }
              
                

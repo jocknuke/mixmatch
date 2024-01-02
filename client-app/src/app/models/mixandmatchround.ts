@@ -5,10 +5,11 @@ import { User } from "./user";
 export interface MixAndMatchRound {
    
     
-    id: number;
+   
     courtsTotal: number;
     roundType:number;
-    games:MixAndMatchGame[];
+    mixAndMatchGames:MixAndMatchGame[];
+    activityId:string;
 }
 
 
@@ -16,9 +17,9 @@ export interface MixAndMatchRound {
   
 export interface MixAndMatchGame{
   
-    id:number;
-    roundId:number;
-    courtid:number;
+    id?:number;
+    roundId?:number;
+    courtNumber:number;
     players:MixAndMatchPlayer[] ;
     completed: boolean;
     teamOneScore:number;
@@ -37,6 +38,7 @@ export interface MixAndMatchGame{
     displayName: string;
     image?: string;
     gender?:string;
+    appuserid:string;
 
 
   }
@@ -48,6 +50,7 @@ export interface MixAndMatchGame{
         this.displayName = user.displayName;
         this.image = user.image;
         this.gender=user.gender;
+        this.appuserid=user.appUserId;
         
     }
 }

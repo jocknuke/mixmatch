@@ -1,6 +1,8 @@
 
 import { Card, Image, Divider, Feed, Grid, Input, Header } from "semantic-ui-react";
 import { MixAndMatchGame } from "../../app/models/mixandmatchround";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../app/stores/store";
 
 
 interface Props {
@@ -10,7 +12,9 @@ interface Props {
 }
 
 
-export default function MixAndMatchListItemGame({ game }: Props) {
+export default observer(function MixAndMatchListItemGame({ game }: Props) {
+
+  const { mixandmatchStore } = useStore();
 
   const styles = {
     borderColor: 'violet',
@@ -22,7 +26,7 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
     <Card>
       <Card.Content>
-        <Card.Header> Court {game.courtid}</Card.Header>
+        <Card.Header> Court {game.courtNumber}</Card.Header>
       </Card.Content>
 
       <Card.Content>
@@ -34,7 +38,7 @@ export default function MixAndMatchListItemGame({ game }: Props) {
       <Feed>
           {game.players?.filter(p=>p.team===1).map(player => (
 
-            <Feed.Event>
+            <Feed.Event key={player.username}>
 
 
 
@@ -68,7 +72,7 @@ export default function MixAndMatchListItemGame({ game }: Props) {
       <Feed>
           {game.players?.filter(p=>p.team===2).map(player => (
 
-            <Feed.Event>
+            <Feed.Event key={player.username}>
 
 
 
@@ -130,4 +134,4 @@ export default function MixAndMatchListItemGame({ game }: Props) {
 
 
   )
-}
+})

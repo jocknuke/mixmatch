@@ -1,47 +1,164 @@
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Button, Checkbox, Dropdown, Form, Menu, Segment } from "semantic-ui-react";
-
+import { useEffect } from 'react'
 import { courtsNumberOptions, roundTypeOptions } from '../../../app/common/options/mixandmatchOptions';
-import { MixAndMatchRound } from '../../../app/models/mixandmatchround';
-
+import { MixAndMatchGame, MixAndMatchPlayer, MixAndMatchRound } from '../../../app/models/mixandmatchround';
+import { Activity } from '../../../app/models/activity';
+import { useStore } from "../../../app/stores/store";
+import { observer } from 'mobx-react-lite';
+import { Console } from 'console';
 
 interface Props {
     
-    createRound: (thisround:MixAndMatchRound) => void;
-
+   
+    activity: Activity;
     
 }
 
+interface FormData {
+    courtsTotal: number;
+    roundType: number;
+  }
 
-export default function MixAndMatchForm( { createRound}: Props){
+
+export default observer(function MixAndMatchForm( { activity}: Props){
 
 
-    const initialState ={
+    const { mixandmatchStore } = useStore();
 
-        id: 1,
-        courtsTotal: 6,
-        roundType:1,
-        games:[],
+ 
 
-    }
+   
 
-    const [round, setRound] = useState(initialState);
 
-    function handleSubmit() {
 
-        createRound(round);
-    }
 
-    function handleInputChange(event: SyntheticEvent<HTMLElement | HTMLTextAreaElement>, data:any) {
+
+
+
+
+
+
+    const handleAddRound = (data:FormData) => {
+
        
+        const people= [...activity.attendees];
 
-       
-
-
-        const { name, value } = data;
-        setRound({ ...round, [name]: value })
         
-    }
+
+
+        let mygames:MixAndMatchGame[]=[];
+
+      
+
+        for (let i = 1; i < data.courtsTotal+1; i++) {
+           
+
+
+            mygames.push({ 
+                
+                courtNumber:i,
+                players:[],
+                isPlayoff:data.roundType==roundTypeOptions.find(x=>x.text=='Playoffs Coed')?.value?true:false,
+                completed: false,
+                teamOneScore:0,
+                teamTwoScore:0
+  
+  
+            })
+
+            
+             
+
+        }
+
+        people.sort( () => Math.random() - 0.5);
+        
+        people.sort((a, b) => (a.gender! > b.gender!) ? 1 : -1)
+
+
+        while (people.length>0) {
+            mygames.forEach(element => {
+
+
+                   let player1=new MixAndMatchPlayer(people.splice(0,1)[0]);
+                   player1.team=1;
+
+                   let player2=new MixAndMatchPlayer(people.splice(0,1)[0]);
+                   player2.team=2;
+
+
+
+
+
+              
+                    element.players.push(player1);
+                    element.players.push(player2);
+                  
+    
+    
+                   
+                    
+                });
+    
+
+
+          }
+
+            
+           
+        
+
+
+         
+
+            
+        
+
+             let newgames=mygames.filter(x=>x.players.length>0);
+
+            
+             
+            
+
+        const addGameCommand ={
+
+        
+            MixAndMatchGames:newgames,
+            ActivityId:activity.id
+    
+        }
+
+
+        console.log("ADD GAME");
+       
+       
+
+        mixandmatchStore.addGame(addGameCommand);
+       
+
+
+
+        
+        
+    };
+
+
+
+    const [formData, setFormData] = React.useState<FormData>({ roundType:1,  courtsTotal: 6 });
+
+  function handleInputChange(event: SyntheticEvent<HTMLElement | HTMLTextAreaElement>, data:any) {
+    const { name, value } = data;
+    setFormData({ ...formData, [name]: value });
+   
+  }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    handleAddRound(formData);
+  }
+
+    
 
     return(
         <>
@@ -70,7 +187,7 @@ export default function MixAndMatchForm( { createRound}: Props){
     <Form.Field>
       <label>Round Type</label>
       <Menu compact>
-      <Dropdown selectedLabel={roundTypeOptions[0].text} name='roundType' defaultValue={roundTypeOptions[0].value} onChange={handleInputChange} options={roundTypeOptions} simple item />
+      <Dropdown multiple={false} selectedLabel={roundTypeOptions[0].text} name='roundType' defaultValue={roundTypeOptions[0].value} onChange={handleInputChange} options={roundTypeOptions} simple item />
   </Menu>
     
     </Form.Field>
@@ -86,4 +203,4 @@ export default function MixAndMatchForm( { createRound}: Props){
     )
 
 
-}
+})

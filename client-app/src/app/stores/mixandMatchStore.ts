@@ -14,7 +14,7 @@ export default class MixAndMatchStore {
     createHubConnection = (activityId: string) => {
         if (store.activityStore.selectedActivity) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl('http://localhost:5000/mixandmatch?activityId=' + activityId, {
+                .withUrl('http://localhost:5000/mixandmatchhub?activityId=' + activityId, {
                     accessTokenFactory: () => store.userStore.user?.token!
                 })
                 .withAutomaticReconnect()
@@ -30,12 +30,16 @@ export default class MixAndMatchStore {
                 });
             });
 
-            this.hubConnection.on('ReceiveRounds', game => {
+
+            this.hubConnection.on('ReceiveRounds', newgames => {
+              
+
                 runInAction(() => {
-                   
-                    this.games.unshift(game);
+                    this.games.push.apply(this.games, newgames);
                 })
             })
+
+            
         }
     }
 
@@ -51,7 +55,14 @@ export default class MixAndMatchStore {
     addGame = async (values: any) => {
         values.activityId = store.activityStore.selectedActivity?.id;
         try {
+
+            
+         
             await this.hubConnection?.invoke('SendRound', values);
+
+          
+
+
         } catch (error) {
             console.log(error);
         }
@@ -63,10 +74,10 @@ export default class MixAndMatchStore {
             
 
             this.games.reduce((group: {[key: string]: MixAndMatchGame[]}, item) => {
-                if (!group[item.roundId]) {
-                 group[item.roundId] = [];
+                if (!group[item.roundId!]) {
+                 group[item.roundId!] = [];
                 }
-                group[item.roundId].push(item);
+                group[item.roundId!].push(item);
                 return group;
                }, {} )
 

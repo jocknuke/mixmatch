@@ -4,6 +4,7 @@ export interface User {
     token: string;
     image?: string;
     gender?:string;
+    id?:string;
 }
 
 export interface UserFormValues {

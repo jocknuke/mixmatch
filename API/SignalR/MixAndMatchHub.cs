@@ -18,10 +18,20 @@ namespace API.SignalR
 
         public async Task SendRound(Create.Command command)
         {
-            var comment = await _mediator.Send(command);
 
-            await Clients.Group(command.ActivityId.ToString())
-                .SendAsync("ReceiveRounds", comment.Value);
+                   
+            
+             var round = await _mediator.Send(command);
+            
+
+
+            await Clients.Group(command.ActivityId.ToString()).SendAsync("ReceiveRounds", round.Value);
+           
+          
+             
+           
+
+           
         }
 
         public override async Task OnConnectedAsync()

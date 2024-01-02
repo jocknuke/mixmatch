@@ -42,7 +42,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity: {attendee
 
     {attendees.map(attendee => (
 
-<Table.Row>
+<Table.Row key={attendee.username}>
    
                         
                         

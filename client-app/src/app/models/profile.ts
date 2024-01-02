@@ -10,6 +10,8 @@ export interface Profile {
     following: boolean;
     photos?: Photo[];
     gender?:string;
+    appUserId:string;
+    
 }
 
 export class Profile implements Profile {

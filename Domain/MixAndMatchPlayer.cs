@@ -6,7 +6,7 @@ namespace Domain
         public AppUser AppUser { get; set; }
         public int GameId { get; set; }
         public MixAndMatchGame Game { get; set; }   
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
 
         public int Team { get; set; }
     }
