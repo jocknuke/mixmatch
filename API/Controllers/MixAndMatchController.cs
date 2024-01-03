@@ -24,6 +24,13 @@ namespace API.Controllers
         }
 
 
+         [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateGame(Guid id, MixAndMatchGame mixAndMatchGame)
+        {
+            return HandleResult(await Mediator.Send(new Edit.Command {  ActivityId=id,  mixAndMatchGame=mixAndMatchGame  }));
+        }
+
+
 
 
 

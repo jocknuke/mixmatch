@@ -83,5 +83,12 @@ namespace Persistence
                     .OnDelete(DeleteBehavior.Cascade);
             });
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+{
+    optionsBuilder.EnableSensitiveDataLogging();
+}
     }
+
+    
 }

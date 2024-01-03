@@ -123,20 +123,21 @@ export default observer(function MixAndMatchForm( { activity}: Props){
 
         const addGameCommand ={
 
-        
+         
             MixAndMatchGames:newgames,
             ActivityId:activity.id
     
         }
 
 
-        console.log("ADD GAME");
+        
        
-       
+      
 
         mixandmatchStore.addGame(addGameCommand);
-       
 
+
+       
 
 
         

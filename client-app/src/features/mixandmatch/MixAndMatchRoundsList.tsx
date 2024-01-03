@@ -77,7 +77,7 @@ return (
 
 
     {games && games.map(match => (
-                        <MixAndMatchListItemGame key={`${match.roundId}-${match.courtNumber}`} game={match}/>
+                        <MixAndMatchListItemGame key={`${match.roundId}-${match.courtNumber}`} game={match} />
                     ))}
     
       

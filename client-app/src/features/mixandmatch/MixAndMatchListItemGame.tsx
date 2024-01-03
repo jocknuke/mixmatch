@@ -1,12 +1,16 @@
 
-import { Card, Image, Divider, Feed, Grid, Input, Header } from "semantic-ui-react";
+import { Card, Image, Divider, Feed, Grid, Input, Header, Button } from "semantic-ui-react";
 import { MixAndMatchGame } from "../../app/models/mixandmatchround";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
+import { SyntheticEvent, useState } from "react";
+import { Form } from "react-router-dom";
+import { getuid } from "process";
 
 
 interface Props {
   game: MixAndMatchGame;
+
 
 
 }
@@ -15,6 +19,45 @@ interface Props {
 export default observer(function MixAndMatchListItemGame({ game }: Props) {
 
   const { mixandmatchStore } = useStore();
+
+
+
+  const [_game, setGameScore] = useState<MixAndMatchGame>(game);
+
+ 
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setGameScore({ ..._game, [name]: parseInt(value) });
+  }
+
+
+
+  
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+   
+      
+
+      const data={
+
+        mixAndMatchGame:_game,
+       
+
+      }
+
+     
+
+      
+
+      
+
+    mixandmatchStore.updateGame(data);
+
+  }
+
+
 
   const styles = {
     borderColor: 'violet',
@@ -26,7 +69,7 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
 
     <Card>
       <Card.Content>
-        <Card.Header> Court {game.courtNumber}</Card.Header>
+        <Card.Header> Court {_game.courtNumber}</Card.Header>
       </Card.Content>
 
       <Card.Content>
@@ -36,7 +79,7 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
         
 
       <Feed>
-          {game.players?.filter(p=>p.team===1).map(player => (
+          {_game.players?.filter(p=>p.team===1).map(player => (
 
             <Feed.Event key={player.username}>
 
@@ -70,7 +113,7 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
       <Grid.Column>
        
       <Feed>
-          {game.players?.filter(p=>p.team===2).map(player => (
+          {_game.players?.filter(p=>p.team===2).map(player => (
 
             <Feed.Event key={player.username}>
 
@@ -109,22 +152,36 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
     </Divider>
 <Card.Content>
 
+<Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+
+
 <Grid columns={2} divided>
     <Grid.Row>
       <Grid.Column>
-      <Input style={{ width: '50%' }} value={game.teamOneScore} placeholder='0' />
+      <Input name='teamOneScore' style={{ width: '50%' }} value={_game.teamOneScore} onChange={handleInputChange} placeholder='0' />
       </Grid.Column>
       <Grid.Column>
-      <Input style={{ width: '50%' }} value={game.teamTwoScore}  placeholder='0' />
+      <Input name='teamTwoScore' style={{ width: '50%' }} value={_game.teamTwoScore} onChange={handleInputChange} placeholder='0' />
       </Grid.Column>
     
     </Grid.Row>
 
     </Grid>
-  
+
+    <Divider horizontal>
       
-       
+      </Divider>
+  
+        <Card.Content>
+  
+        <button className="ui fluid button">Save score</button>
+        </Card.Content>
+
+</Form>
+
+
       </Card.Content>
+    
 
        
       </Card.Content>

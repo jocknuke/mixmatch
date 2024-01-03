@@ -5,6 +5,7 @@ import { MixAndMatchGame } from "../models/mixandmatchround";
 
 export default class MixAndMatchStore {
     games: MixAndMatchGame[] = [];
+    
     hubConnection: HubConnection | null = null;
 
     constructor() {
@@ -39,6 +40,23 @@ export default class MixAndMatchStore {
                 })
             })
 
+            this.hubConnection.on('ReceiveGame', game => {
+
+                
+             
+
+                runInAction(() => {
+                    const _g=this.games.find(x=>x.id==game.id);
+                    if(_g ){
+
+                        _g.teamOneScore=game.teamOneScore;
+                        _g.teamTwoScore=game.teamTwoScore;
+                    }
+                    
+
+                })
+            })
+
             
         }
     }
@@ -56,11 +74,31 @@ export default class MixAndMatchStore {
         values.activityId = store.activityStore.selectedActivity?.id;
         try {
 
-            
+          
          
             await this.hubConnection?.invoke('SendRound', values);
 
           
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    updateGame = async (values: any) => {
+        values.activityId = store.activityStore.selectedActivity?.id;
+        values.ActivityId = store.activityStore.selectedActivity?.id;
+        try {
+
+           
+            console.log(values);
+           
+         
+            await this.hubConnection?.invoke('UpdateGame', values);
+
+           
 
 
         } catch (error) {

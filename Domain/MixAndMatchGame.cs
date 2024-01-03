@@ -3,6 +3,12 @@ namespace Domain
 {
     public class MixAndMatchGame
     {
+        public MixAndMatchGame(){
+
+            
+        }
+
+
         public int Id { get; set; }
         
         public int RoundId { get; set; }
