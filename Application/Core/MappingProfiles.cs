@@ -60,6 +60,7 @@ namespace Application.Core
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
                 .ForMember(d => d.Gender, o => o.MapFrom(s => s.AppUser.Gender))
                  .ForMember(d => d.AppUserId, o => o.MapFrom(s => s.AppUser.Id))
+                  .ForMember(d => d.totalPoints, o => o.MapFrom(s => s.totalPoints))
                 .ForMember(d => d.Image, o => o.MapFrom(s => s.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url));
               
         }

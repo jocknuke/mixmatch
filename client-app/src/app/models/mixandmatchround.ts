@@ -33,12 +33,14 @@ export interface MixAndMatchGame{
     
 
   
-    team: number;
+    team?: number;
     username: string;
     displayName: string;
     image?: string;
     gender?:string;
-    appuserid:string;
+    appUserId:string;
+    totalPoints:number;
+    isCheckedIn:boolean;
 
 
   }
@@ -50,7 +52,8 @@ export interface MixAndMatchGame{
         this.displayName = user.displayName;
         this.image = user.image;
         this.gender=user.gender;
-        this.appuserid=user.appUserId;
+        this.appUserId=user.appUserId;
+       
         
     }
 }

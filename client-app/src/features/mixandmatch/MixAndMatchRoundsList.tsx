@@ -1,10 +1,10 @@
 import { Card, Feed, Header, Segment } from "semantic-ui-react";
-import { MixAndMatchGame, MixAndMatchRound } from "../../app/models/mixandmatchround";
+import { MixAndMatchGame, MixAndMatchPlayer, MixAndMatchRound } from "../../app/models/mixandmatchround";
 import MixAndMatchListItemGame from "./MixAndMatchListItemGame";
 import { Activity } from "../../app/models/activity";
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { observer } from 'mobx-react-lite'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { formatDistanceToNow } from 'date-fns';
@@ -18,47 +18,32 @@ interface Props {
 
 
 
-
-
-
-
 export default observer(function MixAndMatchRoundsList({activity}: Props){
 
-
-
-  
-
-
-
   const { mixandmatchStore } = useStore();
-
+  const { groupedGamesByRoundId } = mixandmatchStore;
  
+  useEffect(() => {
+    if (activity.id) {
+       
+        mixandmatchStore.createHubConnection(activity.id);
 
-    useEffect(() => {
-        if (activity.id) {
-          mixandmatchStore.createHubConnection(activity.id);
-        }
-        return () => {
-          mixandmatchStore.clearGames();
-        }
-    }, [mixandmatchStore, activity.id]);
+    };
+    return () => {
+     mixandmatchStore.clearGames();
+    }
+}, [mixandmatchStore, activity.id]);
 
-
-
-
-   
-    const rounds=mixandmatchStore.groupedGamesByRoundId;
-
-    
-
-      
 
 return (
 
   
 <>
 
-  {rounds.map(([group, games]) => (
+
+  {groupedGamesByRoundId.map(([group, games]) => (
+
+ 
 
     <Segment key={group}
                 textAlign='center'

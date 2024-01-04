@@ -23,22 +23,37 @@ import { roundTypeOptions } from "../../../app/common/options/mixandmatchOptions
 export default observer(function ActivityDetails() {
     const { activityStore } = useStore();
     const { selectedActivity: activity, loadActivity, loadingInitial, clearSelectedActivity } = activityStore;
-    const { id } = useParams();
+    const { id } = useParams();  
+   
+    const players:MixAndMatchPlayer[]=[];
+
 
     
-       
-
-      
 
     useEffect(() => {
-        if (id) loadActivity(id);
-        return () => clearSelectedActivity();
-    }, [id, loadActivity, clearSelectedActivity]);
+        if (id) {
+            
+            loadActivity(id);
+        
+        };
+        return () => {clearSelectedActivity();
+       
+        }
+       
+    }, [id,loadActivity, clearSelectedActivity]);
 
-    if (loadingInitial || !activity) return <LoadingComponent />
+   
+   
 
+
+    
+   
+    if (loadingInitial || !activity ) return <LoadingComponent />
 
   
+
+   
+    
 
     return (
         <Grid columns={2} stackable>
@@ -47,7 +62,7 @@ export default observer(function ActivityDetails() {
                 <ActivityDetailedInfo activity={activity} />
                 <ActivityDetailedChat activityId={activity.id} />
 
-                <MixAndMatchRoundsList activity={activity} />
+                <MixAndMatchRoundsList  activity={activity} />
                   
                
 
@@ -62,7 +77,7 @@ export default observer(function ActivityDetails() {
                
 
               {
- activity.category=='mixandmatch' ? (<MixAndMatchPlayersSidebar activity={activity}/>):(<ActivityDetailedSidebar activity={activity}/>)
+ activity.category=='mixandmatch' ? (<MixAndMatchPlayersSidebar  players={players} activity={activity}/>):(<ActivityDetailedSidebar activity={activity}/>)
 }
 
 

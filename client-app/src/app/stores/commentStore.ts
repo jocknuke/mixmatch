@@ -24,6 +24,8 @@ export default class CommentStore {
             this.hubConnection.start().catch(error => console.log('Error establishing connection: ', error));
 
             this.hubConnection.on('LoadComments', (comments: ChatComment[]) => {
+
+                
                 runInAction(() => {
                     comments.forEach(comment => {
                         comment.createdAt = new Date(comment.createdAt + 'Z');

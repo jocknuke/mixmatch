@@ -14,6 +14,7 @@ export interface Activity {
     isHost?: boolean
     attendees: Profile[]
     host?: Profile;
+    
 }
 
 export class ActivityFormValues

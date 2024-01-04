@@ -2,20 +2,30 @@ import { Segment, List, Label, Item, Image, Feed, Table, Header } from 'semantic
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { Activity } from '../../app/models/activity'
+import { useStore } from '../../app/stores/store'
+import { useEffect, useState } from 'react'
+import { MixAndMatchPlayer } from '../../app/models/mixandmatchround'
 
 
 interface Props {
-    activity: Activity
+    activity: Activity,
+    players: MixAndMatchPlayer[]
 }
 
 
-export default observer(function MixAndMatchPlayersSidebar ({activity: {attendees, host}}: Props) {
+export default observer(function MixAndMatchPlayersSidebar ({activity, players}: Props) {
+    
+   
+
+
+    
+
     const styles = {
         borderColor: 'violet',
         borderWidth: 3,
        
       }
-    if (!attendees) return null;
+    if (!activity.attendees) return null;
     return (
         <>
             <Segment
@@ -26,7 +36,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity: {attendee
                 inverted
                 color='teal'
             >
-                {attendees.length} {attendees.length === 1 ? 'Person' : 'People'} going
+                {players.length} {players.length === 1 ? 'Person' : 'People'} going
             </Segment>
             <Segment attached style={{overflow: 'auto', maxHeight: 600 }}>
 
@@ -40,9 +50,9 @@ export default observer(function MixAndMatchPlayersSidebar ({activity: {attendee
 
     <Table.Body>
 
-    {attendees.map(attendee => (
+    {players.map(attendee => (
 
-<Table.Row key={attendee.username}>
+<Table.Row key={attendee.appUserId}>
    
                         
                         
@@ -52,7 +62,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity: {attendee
      
         <Table.Cell>
         
-        <Item key={attendee.username} style={{ position: 'relative' }}>
+        <Item key={attendee.appUserId} style={{ position: 'relative' }}>
                             
                             <Image 
                              style={attendee.gender=='F' ? styles : null}
@@ -64,8 +74,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity: {attendee
                                 <Item.Header >
                                     <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link>
                                 </Item.Header>
-                                {attendee.following &&
-                                <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>}
+                                
                             </Item.Content>
                         </Item>
 
@@ -74,7 +83,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity: {attendee
         <Table.Cell>
 
 
-21
+        {attendee.totalPoints}
 
 
         </Table.Cell>

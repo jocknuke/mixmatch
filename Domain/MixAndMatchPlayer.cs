@@ -8,6 +8,8 @@ namespace Domain
         public MixAndMatchGame Game { get; set; }   
         public bool? IsActive { get; set; }
 
+        public int totalPoints { get; set; }=0;
+
         public int Team { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace Application.MixAndMatch
         public string Image { get; set; }
         public int Team { get; set; }
         public string AppUserId { get; set; }
+
+        public int totalPoints { get; set; }
         
     }
 }

@@ -28,17 +28,6 @@ export default observer(function MixAndMatchForm( { activity}: Props){
 
  
 
-   
-
-
-
-
-
-
-
-
-
-
     const handleAddRound = (data:FormData) => {
 
        

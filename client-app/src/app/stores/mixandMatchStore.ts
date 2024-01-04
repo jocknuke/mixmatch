@@ -1,11 +1,13 @@
 import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "./store";
-import { MixAndMatchGame } from "../models/mixandmatchround";
+import { MixAndMatchGame, MixAndMatchPlayer } from "../models/mixandmatchround";
 
 export default class MixAndMatchStore {
     games: MixAndMatchGame[] = [];
-    
+    players: MixAndMatchPlayer[]=[];
+    groupedRound:[string, MixAndMatchGame][]=[];
+    loadingInitial = false;
     hubConnection: HubConnection | null = null;
 
     constructor() {
@@ -13,7 +15,11 @@ export default class MixAndMatchStore {
     }
 
     createHubConnection = (activityId: string) => {
+
+      
+        
         if (store.activityStore.selectedActivity) {
+            
             this.hubConnection = new HubConnectionBuilder()
                 .withUrl('http://localhost:5000/mixandmatchhub?activityId=' + activityId, {
                     accessTokenFactory: () => store.userStore.user?.token!
@@ -25,9 +31,12 @@ export default class MixAndMatchStore {
             this.hubConnection.start().catch(error => console.log('Error establishing connection: ', error));
 
             this.hubConnection.on('LoadRounds', (games: MixAndMatchGame[]) => {
+
+               
                 runInAction(() => {
                     
                     this.games = games;
+
                 });
             });
 
@@ -67,6 +76,7 @@ export default class MixAndMatchStore {
 
     clearGames = () => {
         this.games = [];
+        this.players=[];
         this.stopHubConnection();
     }
 
@@ -85,15 +95,37 @@ export default class MixAndMatchStore {
             console.log(error);
         }
     }
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
+    }
+
+    loadGames= async (games:MixAndMatchGame[]) => {
+        this.loadingInitial = true;
+        try {
+
+
+            runInAction(() => {
+        
+                this.games=games;
+                  });
+
+
+            
+            this.setLoadingInitial(false);
+        } catch (error) {
+            console.log(error);
+            this.setLoadingInitial(false);
+        }
+    }
 
 
     updateGame = async (values: any) => {
-        values.activityId = store.activityStore.selectedActivity?.id;
+       
         values.ActivityId = store.activityStore.selectedActivity?.id;
         try {
 
            
-            console.log(values);
+           
            
          
             await this.hubConnection?.invoke('UpdateGame', values);
@@ -108,6 +140,9 @@ export default class MixAndMatchStore {
 
 
     get groupedGamesByRoundId() {
+        
+
+
         return Object.entries(
             
 
@@ -121,6 +156,56 @@ export default class MixAndMatchStore {
 
         )
     }
+
+
+    get getUpdatedPlayers () {
+   
+       
+        const playersIdx:any = {}; // variables for indexing
+        
+        
+        runInAction(() => {
+        
+      this.players=[];
+        });
+
+
+        
+this.games.map((game) =>
+
+  game.players.map((player) => {
+
+ 
+
+    const findPlayer = playersIdx[player.appUserId] ?? -1;
+    const point =  player.team === 1 ? game.teamOneScore : game.teamTwoScore;
+    if (findPlayer > -1) {
+        runInAction(() => {
+      this.players[findPlayer].totalPoints += point;
+        });
+     
+    } else {
+       
+      const newPlayer = { ...player, totalScore: point }
+      delete newPlayer.team
+      runInAction(() => {
+      this.players.push(newPlayer);
+      });
+      playersIdx[player.appUserId] = this.players.length - 1;
+    }
+  })
+);
+
+
+
+
+
+  return this.players;
+
+   
+}
+
+   
 
 
 
