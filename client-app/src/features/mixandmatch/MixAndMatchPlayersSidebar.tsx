@@ -4,20 +4,54 @@ import { observer } from 'mobx-react-lite'
 import { Activity } from '../../app/models/activity'
 import { useStore } from '../../app/stores/store'
 import { useEffect, useState } from 'react'
-import { MixAndMatchPlayer } from '../../app/models/mixandmatchround'
+import { MixAndMatchGame, MixAndMatchPlayer } from '../../app/models/mixandmatchround'
 
 
 interface Props {
-    activity: Activity,
-    players: MixAndMatchPlayer[]
+    activity: Activity
+}
+
+function getPlayersBoard(games:MixAndMatchGame[]){
+
+
+    const playersIdx:any = {}; // variables for indexing
+    const players: MixAndMatchPlayer[]=[]; // result
+    games.forEach((game) =>
+      game.players.forEach((player) => {
+        const findPlayer = playersIdx[player.appUserId] ?? -1;
+        const point =  player.team === 1 ? game.teamOneScore : game.teamTwoScore;
+        
+        if (findPlayer > -1) {
+          players[findPlayer].totalPoints += point;
+        
+        } else {
+          const newPlayer = { ...player, totalPoints: point }
+          delete newPlayer.team
+          players.push(newPlayer);
+          playersIdx[player.appUserId] = players.length - 1;
+        }
+      })
+    );
+
+    players.sort( function ( a, b ) { return b.totalPoints - a.totalPoints; } );
+
+    return players;
+    
+
+
+
 }
 
 
-export default observer(function MixAndMatchPlayersSidebar ({activity, players}: Props) {
+export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
     
-   
+    let players:MixAndMatchPlayer[]=[];
+
+    const { mixandmatchStore } = useStore();
 
 
+
+    players=getPlayersBoard(mixandmatchStore.games);
     
 
     const styles = {

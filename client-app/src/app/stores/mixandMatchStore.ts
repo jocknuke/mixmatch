@@ -161,46 +161,11 @@ export default class MixAndMatchStore {
     get getUpdatedPlayers () {
    
        
-        const playersIdx:any = {}; // variables for indexing
-        
-        
-        runInAction(() => {
-        
-      this.players=[];
-        });
-
-
-        
-this.games.map((game) =>
-
-  game.players.map((player) => {
-
- 
-
-    const findPlayer = playersIdx[player.appUserId] ?? -1;
-    const point =  player.team === 1 ? game.teamOneScore : game.teamTwoScore;
-    if (findPlayer > -1) {
-        runInAction(() => {
-      this.players[findPlayer].totalPoints += point;
-        });
-     
-    } else {
        
-      const newPlayer = { ...player, totalScore: point }
-      delete newPlayer.team
-      runInAction(() => {
-      this.players.push(newPlayer);
-      });
-      playersIdx[player.appUserId] = this.players.length - 1;
-    }
-  })
-);
 
 
 
-
-
-  return this.players;
+                 return this.players;
 
    
 }

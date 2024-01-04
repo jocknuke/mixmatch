@@ -25,7 +25,7 @@ export default observer(function ActivityDetails() {
     const { selectedActivity: activity, loadActivity, loadingInitial, clearSelectedActivity } = activityStore;
     const { id } = useParams();  
    
-    const players:MixAndMatchPlayer[]=[];
+   
 
 
     
@@ -77,7 +77,7 @@ export default observer(function ActivityDetails() {
                
 
               {
- activity.category=='mixandmatch' ? (<MixAndMatchPlayersSidebar  players={players} activity={activity}/>):(<ActivityDetailedSidebar activity={activity}/>)
+ activity.category=='mixandmatch' ? (<MixAndMatchPlayersSidebar   activity={activity}/>):(<ActivityDetailedSidebar activity={activity}/>)
 }
 
 
