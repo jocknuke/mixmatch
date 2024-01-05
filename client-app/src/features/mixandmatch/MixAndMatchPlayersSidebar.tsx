@@ -51,6 +51,9 @@ export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
 
 
 
+
+
+
     players=getPlayersBoard(mixandmatchStore.games);
     
 
@@ -70,7 +73,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
                 inverted
                 color='teal'
             >
-                {players.length} {players.length === 1 ? 'Person' : 'People'} going
+                Scoreboard
             </Segment>
             <Segment attached style={{overflow: 'auto', maxHeight: 600 }}>
 
@@ -78,7 +81,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>Player</Table.HeaderCell>
-        <Table.HeaderCell>Score</Table.HeaderCell>
+        <Table.HeaderCell>Total</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
 
@@ -98,12 +101,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
         
         <Item key={attendee.appUserId} style={{ position: 'relative' }}>
                             
-                            <Image 
-                             style={attendee.gender=='F' ? styles : null}
-                             bordered
-                             circular
-                            size='mini' 
-                            src={'/assets/user.png'} />
+                            
                             <Item.Content verticalAlign='middle'>
                                 <Item.Header >
                                     <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link>

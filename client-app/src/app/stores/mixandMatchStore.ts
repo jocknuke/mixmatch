@@ -2,12 +2,15 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signal
 import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "./store";
 import { MixAndMatchGame, MixAndMatchPlayer } from "../models/mixandmatchround";
+import agent from "../api/agent";
 
 export default class MixAndMatchStore {
     games: MixAndMatchGame[] = [];
+    gamesDetails: MixAndMatchGame[] = [];
     players: MixAndMatchPlayer[]=[];
     groupedRound:[string, MixAndMatchGame][]=[];
     loadingInitial = false;
+    roundActiveIndex=0;
     hubConnection: HubConnection | null = null;
 
     constructor() {
@@ -43,8 +46,10 @@ export default class MixAndMatchStore {
 
             this.hubConnection.on('ReceiveRounds', newgames => {
               
+               
 
                 runInAction(() => {
+                    this.roundActiveIndex=newgames.roundId;
                     this.games.push.apply(this.games, newgames);
                 })
             })
@@ -116,6 +121,25 @@ export default class MixAndMatchStore {
             console.log(error);
             this.setLoadingInitial(false);
         }
+    }
+
+    loadGamesDetails = async (activityId: string, roundId:number) => {
+       
+            this.setLoadingInitial(true);
+
+            const params = new URLSearchParams();
+            params.append('activityId', activityId.toString());
+            params.append('roundId', roundId.toString())
+            try {
+                const result = await agent.Games.list(params);
+               
+                this.setLoadingInitial(false);
+                return result.data;
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        
     }
 
 

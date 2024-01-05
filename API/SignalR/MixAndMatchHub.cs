@@ -59,8 +59,25 @@ namespace API.SignalR
         {
             var httpContext = Context.GetHttpContext();
             var activityId = httpContext.Request.Query["activityId"];
+            var roundId = httpContext.Request.Query["roundId"];
+
+            MixAndMatchParams param= new MixAndMatchParams();
+
+
+            int id;
+             bool success = int.TryParse(roundId, out id);
+         if (success)
+         {
+                param.roundId=id;
+         }
+
+                param.activityId=Guid.Parse(activityId);
+               
+
+
+
             await Groups.AddToGroupAsync(Context.ConnectionId, activityId);
-            var result = await _mediator.Send(new List.Query{ActivityId = Guid.Parse(activityId)});
+            var result = await _mediator.Send(new List.Query{ Params = param });
             await Clients.Caller.SendAsync("LoadRounds", result.Value);
         }
     }

@@ -77,9 +77,9 @@ export default observer(function ActivityDetails() {
                
 
               {
- activity.category=='mixandmatch' ? (<MixAndMatchPlayersSidebar   activity={activity}/>):(<ActivityDetailedSidebar activity={activity}/>)
+ activity.category=='mixandmatch' && (<MixAndMatchPlayersSidebar   activity={activity}/>)
 }
-
+<ActivityDetailedSidebar activity={activity}/>
 
 
 

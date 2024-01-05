@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Application.MixAndMatch;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace API.Controllers
@@ -28,6 +29,12 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateGame(Guid id, MixAndMatchGame mixAndMatchGame)
         {
             return HandleResult(await Mediator.Send(new Edit.Command {  ActivityId=id,  mixAndMatchGame=mixAndMatchGame  }));
+        }
+         [Authorize(Policy = "IsActivityHost")]
+         [HttpGet]
+        public async Task<IActionResult> GetGames([FromQuery] MixAndMatchParams param)
+        {
+            return HandleResult(await Mediator.Send(new List.Query { Params = param }));
         }
 
 

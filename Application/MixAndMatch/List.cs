@@ -11,7 +11,8 @@ namespace Application.MixAndMatch
     {
         public class Query : IRequest<Result<List<MixAndMatchDto>>>
         {
-            public Guid ActivityId { get; set; }
+           
+            public MixAndMatchParams Params { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<List<MixAndMatchDto>>>
@@ -27,10 +28,16 @@ namespace Application.MixAndMatch
             public async Task<Result<List<MixAndMatchDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var games = await _context.MixAndMatchGames
-                    .Where(x => x.Activity.Id == request.ActivityId)
+                    .Where(x => x.Activity.Id == request.Params.activityId)
                     .OrderBy(x => x.RoundId)
                     .ProjectTo<MixAndMatchDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
+
+
+                    if (request.Params.roundId!=null)
+                {
+                    games = games.Where(x => x.RoundId==request.Params.roundId).ToList();
+                }
 
                 return Result<List<MixAndMatchDto>>.Success(games);
             }

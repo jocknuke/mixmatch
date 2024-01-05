@@ -8,6 +8,7 @@ import TestErrors from "../../features/errors/TestError";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import LoginForm from "../../features/users/LoginForm";
 import App from "../layout/App";
+import MixAndMatchEditRoundDetails from "../../features/mixandmatch/MixAndMatchEditRoundDetails";
 
 export const routes: RouteObject[] = [
     {
@@ -24,6 +25,7 @@ export const routes: RouteObject[] = [
             {path: 'not-found', element: <NotFound />},
             {path: 'server-error', element: <ServerError />},
             {path: '*', element: <Navigate replace to='/not-found' />},
+            {path: 'manage/games/', element: <MixAndMatchEditRoundDetails key='edit' />}
         ]
     }
 ]

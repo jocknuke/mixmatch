@@ -25,8 +25,15 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+             Console.Write("####################################      ");
+
+              Console.Write(loginDto.Email);
+
+               Console.Write("      ####################################");
             var user = await _userManager.Users.Include(p => p.Photos)
                 .FirstOrDefaultAsync(x => x.Email == loginDto.Email);
+
+               
 
             if (user == null) return Unauthorized();
 

@@ -24,8 +24,6 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
 
   const [_game, setGameScore] = useState<MixAndMatchGame>(game);
 
-  
-
  
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;

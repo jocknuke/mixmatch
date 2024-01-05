@@ -91,8 +91,7 @@ namespace Application.MixAndMatch
 
                     list.Add(_mapper.Map<MixAndMatchDto>(game));
 
-                }
-;
+                };
 
                  var success = await _context.SaveChangesAsync() > 0;
 

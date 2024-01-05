@@ -6,6 +6,7 @@ import { Photo, Profile, UserActivity } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
 import { router } from '../router/Routes';
 import { store } from '../stores/store';
+import { MixAndMatchGame } from '../models/mixandmatchround';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -84,6 +85,13 @@ const Activities = {
     attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {})
 }
 
+
+const Games = {
+    
+    list:  (params: URLSearchParams)  => axios.get<MixAndMatchGame[]>(`/MixAndMatch`, { params })
+    
+}
+
 const Account = {
     current: () => requests.get<User>('account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
@@ -112,7 +120,8 @@ const Profiles = {
 const agent = {
     Activities,
     Account,
-    Profiles
+    Profiles,
+    Games
 }
 
 export default agent;

@@ -10,7 +10,10 @@ export interface MixAndMatchRound {
     roundType:number;
     mixAndMatchGames:MixAndMatchGame[];
     activityId:string;
+    roundTypeOption:[];
 }
+
+
 
 
 

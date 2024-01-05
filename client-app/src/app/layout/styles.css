@@ -46,3 +46,8 @@ body {
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+.ui.toggle.checkbox input[type=checkbox]:checked~label::before,
+.ui.toggle.checkbox input[type=checkbox]:checked:focus~label::before {
+  background: teal !important;
+}

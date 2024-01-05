@@ -1,4 +1,4 @@
-import { Card, Feed, Header, Segment } from "semantic-ui-react";
+import { Accordion, AccordionContent, AccordionTitle, Card, Feed, Header, Icon, Segment } from "semantic-ui-react";
 import { MixAndMatchGame, MixAndMatchPlayer, MixAndMatchRound } from "../../app/models/mixandmatchround";
 import MixAndMatchListItemGame from "./MixAndMatchListItemGame";
 import { Activity } from "../../app/models/activity";
@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { formatDistanceToNow } from 'date-fns';
 import { useStore } from "../../app/stores/store";
+import { runInAction } from "mobx";
 
 
 
@@ -29,10 +30,42 @@ export default observer(function MixAndMatchRoundsList({activity}: Props){
         mixandmatchStore.createHubConnection(activity.id);
 
     };
-    return () => {
+    return () => {  
      mixandmatchStore.clearGames();
     }
+
+   
 }, [mixandmatchStore, activity.id]);
+
+
+
+
+
+
+
+const [activeIndexRound, setActiveIndexRound] = useState(mixandmatchStore.roundActiveIndex);
+
+
+
+function handleTitleClick(event: React.MouseEvent<HTMLElement>, data:any) {
+
+  
+  event.preventDefault();
+  const { index } = data
+
+  console.log(index);
+  const newIndex = activeIndexRound === index ? -1 : index
+  setActiveIndexRound( newIndex )
+  runInAction(() => {
+    mixandmatchStore.roundActiveIndex=newIndex;
+  });
+
+}
+
+
+ 
+
+
 
 
 return (
@@ -43,20 +76,32 @@ return (
 
   {groupedGamesByRoundId.map(([group, games]) => (
 
+<Segment key={group}
+textAlign='center'
+attached='top'
+inverted
+color='teal'
+style={{ border: 'none' }}
+>
+
+<Accordion >
+
+
+
+   
+              <AccordionTitle
+  active={ mixandmatchStore.roundActiveIndex === Number(group)}
+  index={Number(group)}
+  onClick={handleTitleClick}
+>
+  
  
 
-    <Segment key={group}
-                textAlign='center'
-                attached='top'
-                inverted
-                color='teal'
-                style={{ border: 'none' }}
-            >
                 <Header>Round {group}</Header>
             
-        
+                </AccordionTitle>
 
-
+                <AccordionContent active={ mixandmatchStore.roundActiveIndex === Number(group)}>
         
     <Card.Group>
 
@@ -70,7 +115,13 @@ return (
 
   </Card.Group>
 
+  </AccordionContent>
+  </Accordion>
   </Segment> 
+  
+ 
+ 
+ 
 
 
 
