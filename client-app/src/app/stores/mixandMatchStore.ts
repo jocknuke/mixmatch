@@ -85,6 +85,10 @@ export default class MixAndMatchStore {
         this.stopHubConnection();
     }
 
+    clearGamesDetails = () => {
+        this.gamesDetails = [];
+    }
+
     addGame = async (values: any) => {
         values.activityId = store.activityStore.selectedActivity?.id;
         try {
@@ -124,6 +128,8 @@ export default class MixAndMatchStore {
     }
 
     loadGamesDetails = async (activityId: string, roundId:number) => {
+
+       
        
             this.setLoadingInitial(true);
 
@@ -134,7 +140,14 @@ export default class MixAndMatchStore {
                 const result = await agent.Games.list(params);
                
                 this.setLoadingInitial(false);
-                return result.data;
+
+              
+
+                runInAction(() => {
+        
+                    this.gamesDetails=result.data;
+                      });
+                
             } catch (error) {
                 console.log(error);
                 this.setLoadingInitial(false);
@@ -180,6 +193,8 @@ export default class MixAndMatchStore {
 
         )
     }
+
+   
 
 
     get getUpdatedPlayers () {

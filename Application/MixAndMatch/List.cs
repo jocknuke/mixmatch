@@ -39,8 +39,11 @@ namespace Application.MixAndMatch
                     games = games.Where(x => x.RoundId==request.Params.roundId).ToList();
                 }
 
+              
+
                 return Result<List<MixAndMatchDto>>.Success(games);
             }
+            
         }
     }
 }

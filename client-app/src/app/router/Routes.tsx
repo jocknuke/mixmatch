@@ -8,7 +8,7 @@ import TestErrors from "../../features/errors/TestError";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import LoginForm from "../../features/users/LoginForm";
 import App from "../layout/App";
-import MixAndMatchEditRoundDetails from "../../features/mixandmatch/MixAndMatchEditRoundDetails";
+import MixAndMatchEditRoundDetails from "../../features/mixandmatch/dragndrop/MixAndMatchEditRoundDetails";
 
 export const routes: RouteObject[] = [
     {

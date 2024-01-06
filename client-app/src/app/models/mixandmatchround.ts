@@ -32,6 +32,18 @@ export interface MixAndMatchGame{
     
   }
 
+  export interface MixAndMatchGameDragAndDrop{
+  
+    team:number;
+    roundId?:number;
+    courtNumber:number;
+    teamOne:MixAndMatchPlayer[] ;
+    teamTwo:MixAndMatchPlayer[] ;
+    
+
+    
+  }
+
   export interface MixAndMatchPlayer{
     
 
@@ -39,11 +51,11 @@ export interface MixAndMatchGame{
     team?: number;
     username: string;
     displayName: string;
-    image?: string;
+    image?: string | null;
     gender?:string;
     appUserId:string;
     totalPoints:number;
-    isCheckedIn:boolean;
+    isCheckedIn?:boolean;
 
 
   }

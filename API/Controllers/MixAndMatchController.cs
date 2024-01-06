@@ -30,7 +30,7 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Edit.Command {  ActivityId=id,  mixAndMatchGame=mixAndMatchGame  }));
         }
-         [Authorize(Policy = "IsActivityHost")]
+       
          [HttpGet]
         public async Task<IActionResult> GetGames([FromQuery] MixAndMatchParams param)
         {

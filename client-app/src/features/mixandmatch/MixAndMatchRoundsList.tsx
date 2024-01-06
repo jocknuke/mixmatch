@@ -53,7 +53,7 @@ function handleTitleClick(event: React.MouseEvent<HTMLElement>, data:any) {
   event.preventDefault();
   const { index } = data
 
-  console.log(index);
+  
   const newIndex = activeIndexRound === index ? -1 : index
   setActiveIndexRound( newIndex )
   runInAction(() => {
