@@ -20,7 +20,7 @@ export interface MixAndMatchRound {
   
 export interface MixAndMatchGame{
   
-    id?:number;
+    id?:string;
     roundId?:number;
     courtNumber:number;
     players:MixAndMatchPlayer[] ;
@@ -34,6 +34,8 @@ export interface MixAndMatchGame{
 
   export interface MixAndMatchGameDragAndDrop{
   
+
+ 
     team:number;
     roundId?:number;
     courtNumber:number;
@@ -42,6 +44,23 @@ export interface MixAndMatchGame{
     
 
     
+  }
+
+  export class MixAndMatchGameDragAndDrop implements MixAndMatchGameDragAndDrop{
+
+    constructor(game: MixAndMatchGame) {
+
+      this.teamOne=game.players.filter(p=>p.team==1);
+      this.teamTwo=game.players.filter(p=>p.team==2);
+      this.courtNumber=game.courtNumber;
+
+
+
+    }
+
+    
+
+
   }
 
   export interface MixAndMatchPlayer{
