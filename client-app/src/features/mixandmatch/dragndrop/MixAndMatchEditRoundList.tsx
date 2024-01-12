@@ -7,6 +7,7 @@ import ActivityDetailedHeader from "../../activities/details/ActivityDetailedHea
 import ActivityDetailedInfo from "../../activities/details/ActivityDetailedInfo";
 import { Activity } from "../../../app/models/activity";
 import ActivityDetailedSidebar from "../../activities/details/ActivityDetailedSidebar";
+import MixAndMatchStore from "../../../app/stores/mixandMatchStore";
 
 
 
@@ -35,7 +36,7 @@ const female = {
 
 
 const reorder = (court: MixAndMatchGameDragAndDrop, team:number, startIndex: number, endIndex: number): MixAndMatchGameDragAndDrop => {
-
+   
     const list:any[]=team==1?court.teamOne:court.teamTwo
      const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -125,6 +126,7 @@ export default observer(function MixAndMatchEditRoundList({  games }: Props) {
 //dragndrop
 
 const [state, setState] = useState<MixAndMatchGameDragAndDrop[]>(games);
+
 
 const onDragEnd = (result: DropResult) => {
   const { source, destination } = result;

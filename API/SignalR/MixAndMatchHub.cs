@@ -33,6 +33,34 @@ namespace API.SignalR
 
            
         }
+          public async Task DeleteRound(Delete.Command command)
+        {
+
+                   
+             try
+            {
+                
+
+
+
+              await _mediator.Send(command);
+            
+
+
+            await Clients.Group(command.ActivityId.ToString()).SendAsync("RemoveRound",command.Id);
+            
+           
+          
+              }
+            catch (System.Exception ex)
+            {
+                  Console.Write("Hub ERROR:" + ex.Message);
+            }
+                  
+           
+
+           
+        }
 
          public async Task UpdateGame(Edit.Command command)
         {

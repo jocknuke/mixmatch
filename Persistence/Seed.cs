@@ -533,6 +533,16 @@ namespace Persistence
                             
                              
                     },
+                     new Activity
+                    {
+                        Title = "Mix And Match",
+                        Date = DateTime.UtcNow.AddMonths(5),
+                        Description = "Activity 5 months in future",
+                        Category = "mixandmatch",
+                        City = "Charlotte",
+                        Venue = "CUVC",
+                        Attendees = AllAttendees5.Take(47).ToList()
+                    },
                     new Activity
                     {
                         Title = "Past Activity 2",
@@ -609,16 +619,7 @@ namespace Persistence
                         Venue = "CUVC",
                         Attendees = AllAttendees4.Take(49).ToList()
                     },
-                    new Activity
-                    {
-                        Title = "Mix And Match",
-                        Date = DateTime.UtcNow.AddMonths(5),
-                        Description = "Activity 5 months in future",
-                        Category = "mixandmatch",
-                        City = "Charlotte",
-                        Venue = "CUVC",
-                        Attendees = AllAttendees5.Take(47).ToList()
-                    }
+                   
                   
                    
                 };

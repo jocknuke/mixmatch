@@ -162,6 +162,8 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
 
     const totalPlayers = filteredData.length;
 
+   
+
     const totalAvailCourts = courtsToPlay.filter((x) => x.checked).length;
 
     const peoplePerCourt = 4;
@@ -172,7 +174,7 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
     let avg = 0;
 
 
-
+if(totalPlayers>4){
     for (let i = 1; i <= totalAvailCourts; i++) {
       if (totalPlayers > 0) {
         avg = Math.floor(totalPlayers / countCourts / 2);
@@ -182,9 +184,15 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
         }
       }
     }
+}else{
+    countCourts=1;
+
+
+}
 
 
 
+if(filteredData.length > 0) {
     courtsToPlay.splice(0, countCourts).forEach((court) => {
       if (court.checked) {
         mygames.push({
@@ -197,6 +205,7 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
         });
       }
     });
+}
 
 
   
@@ -220,21 +229,29 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
           element.players.push(p1);
         }
 
-        const user2 = filteredData.splice(0, 1)[0];
-        if (user2) {
-          const p2: MixAndMatchPlayer = {
-            username: user2.username,
-            displayName: user2.displayName,
-            image: user2.image,
-            gender: user2.gender,
-            appUserId: user2.appUserId,
-            totalPoints: 0,
-            isCheckedIn: true,
-            team: 2,
-          };
 
-          element.players.push(p2);
+        if(filteredData.length>1){
+
+
+            const user2 = filteredData.splice(0, 1)[0];
+            if (user2) {
+              const p2: MixAndMatchPlayer = {
+                username: user2.username,
+                displayName: user2.displayName,
+                image: user2.image,
+                gender: user2.gender,
+                appUserId: user2.appUserId,
+                totalPoints: 0,
+                isCheckedIn: true,
+                team: 2,
+              };
+    
+              element.players.push(p2);
+            }
+
         }
+
+   
 
      
       });
@@ -260,6 +277,8 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
 
         let moreCourts=totalAvailCourtsLeft;
 
+        if(totalPlayersIfSplitedGroups> 1) {
+
         for (let i = 1; i <= totalAvailCourtsLeft; i++) {
             if (totalPlayersIfSplitedGroups > 0) {
               avg = Math.floor(filteredDataOptional.length / moreCourts / 2);
@@ -269,6 +288,11 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
               }
             }
           }
+        }else{
+            moreCourts=1;
+
+
+        }
 
         
 
@@ -309,6 +333,8 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
               }
       
               const user2 = filteredDataOptional.splice(0, 1)[0];
+
+              if(filteredDataOptional.length > 0){
               if (user2) {
                 const p2: MixAndMatchPlayer = {
                   username: user2.username,
@@ -323,6 +349,7 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
       
                 element.players.push(p2);
               }
+            }
       
            
             });

@@ -63,7 +63,7 @@ namespace Application.MixAndMatch
 
                 if (activity == null) return null;
 
-                var lastRound =  _context.MixAndMatchGames.OrderByDescending(x=>x.RoundId).FirstOrDefault();
+                var lastRound =  _context.MixAndMatchGames.OrderByDescending(x=>x.RoundId).Where(a=>a.ActivityId==request.ActivityId).FirstOrDefault();
 
                 
 
@@ -89,13 +89,18 @@ namespace Application.MixAndMatch
 
                     
 
-                    list.Add(_mapper.Map<MixAndMatchDto>(game));
+                   
 
                 };
 
                  var success = await _context.SaveChangesAsync() > 0;
 
+                 var listgames =  _context.MixAndMatchGames.Where(x => x.ActivityId == request.ActivityId);
 
+ foreach(MixAndMatchGame game in listgames){
+                  list.Add(_mapper.Map<MixAndMatchDto>(game));
+
+ }
 
                 if (success) return Result<List<MixAndMatchDto>>.Success(list);
 

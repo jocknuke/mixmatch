@@ -1,20 +1,25 @@
 import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { store } from "./store";
 import { MixAndMatchGame, MixAndMatchPlayer } from "../models/mixandmatchround";
 import agent from "../api/agent";
 
 export default class MixAndMatchStore {
     games: MixAndMatchGame[] = [];
+    gamesRegistry = new Map<string, MixAndMatchGame[]>();
     gamesDetails: MixAndMatchGame[] = [];
     players: MixAndMatchPlayer[]=[];
     groupedRound:[string, MixAndMatchGame][]=[];
-    loadingInitial = false;
+    gameLoadingInitial = false;
     roundActiveIndex=0;
     hubConnection: HubConnection | null = null;
+    activityId:string='';
 
     constructor() {
         makeAutoObservable(this);
+      
+        
+        
     }
 
     createHubConnection = (activityId: string) => {
@@ -34,23 +39,47 @@ export default class MixAndMatchStore {
             this.hubConnection.start().catch(error => console.log('Error establishing connection: ', error));
 
             this.hubConnection.on('LoadRounds', (games: MixAndMatchGame[]) => {
-
+               
                
                 runInAction(() => {
+
+                    this.gameLoadingInitial=true;
+
+                    this.activityId=activityId;
+
+                    this.gamesRegistry.set(activityId, games );
+                   
                     
                     this.games = games;
+                    this.gameLoadingInitial=false;
 
                 });
+
+                
             });
 
 
             this.hubConnection.on('ReceiveRounds', newgames => {
               
-               
+             
 
                 runInAction(() => {
                     this.roundActiveIndex=newgames.roundId;
+
+
+
+
                     this.games.push.apply(this.games, newgames);
+                })
+            })
+
+            this.hubConnection.on('RemoveRound', roundDeleted => {
+              
+               
+
+                runInAction(() => {
+                    
+                    this.games=this.games.filter(item => item.roundId !== roundDeleted);;
                 })
             })
 
@@ -73,6 +102,10 @@ export default class MixAndMatchStore {
 
             
         }
+    }
+
+    private getGamesFromRegistry = (id: string) => {
+        return this.gamesRegistry.get(id);
     }
 
     stopHubConnection = () => {
@@ -104,12 +137,30 @@ export default class MixAndMatchStore {
             console.log(error);
         }
     }
+    deleteGame = async (values: any) => {
+       
+        try {
+
+            
+         
+            await this.hubConnection?.invoke('DeleteRound', values);
+
+            
+
+          
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = state;
+        this.gameLoadingInitial = state;
     }
 
     loadGames= async (games:MixAndMatchGame[]) => {
-        this.loadingInitial = true;
+        this.gameLoadingInitial = true;
         try {
 
 
@@ -177,9 +228,10 @@ export default class MixAndMatchStore {
 
 
     get groupedGamesByRoundId() {
+
         
-
-
+        
+       
         return Object.entries(
             
 
@@ -192,6 +244,8 @@ export default class MixAndMatchStore {
                }, {} )
 
         )
+
+       
     }
 
    

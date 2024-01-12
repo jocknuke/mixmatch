@@ -15,6 +15,7 @@ import Dragndrop from "./dragndrop";
 import { DragDropContext, Droppable, Draggable, DropResult, DragUpdate, DraggableLocation } from 'react-beautiful-dnd'; 
 import { MixAndMatchGame, MixAndMatchGameDragAndDrop } from "../../../app/models/mixandmatchround";
 import MixAndMatchEditRoundList from "./MixAndMatchEditRoundList";
+import MixAndMatchEditForm from "./MixAndMatchEditForm";
 
 
 
@@ -62,27 +63,28 @@ export default observer(function MixAndMatchEditRoundDetails() {
     const { activityStore } = useStore();
     const { selectedActivity: activity, loadActivity, loadingInitial, clearSelectedActivity } = activityStore;
     const { mixandmatchStore } = useStore();
-    const { gamesDetails, loadGamesDetails,  clearGamesDetails } = mixandmatchStore;
+    const { gamesDetails, loadGamesDetails,  gameLoadingInitial, clearGamesDetails } = mixandmatchStore;
     
     
     const [searchParams, setSearchParams] = useSearchParams();
    
    const activityid=searchParams.get('activityid');
    const roundid=searchParams.get('roundid');
-
+ 
 
    useEffect(() => {
     if (activityid) {
         
         loadActivity(activityid);
         
-    
-    };
-    return () => {clearSelectedActivity();
-   
+        ;
+        return () => {clearSelectedActivity();
+           
+        }
     }
    
-  }, [activityid,loadActivity, clearSelectedActivity]);
+   
+  }, [activityid,loadActivity]);
 
     
   
@@ -94,16 +96,23 @@ export default observer(function MixAndMatchEditRoundDetails() {
     
     };
     return () => {clearGamesDetails();
-   
+       
     }
+    
    
 }, [roundid,loadGamesDetails, clearGamesDetails]);
 
    
+const updateRound = () => {
+
+alert()
 
 
 
- if (loadingInitial || !activity || !gamesDetails ) return <LoadingComponent />
+}
+
+
+ if (loadingInitial || gameLoadingInitial || !activity || !gamesDetails ) return <LoadingComponent />
 
     
 
@@ -152,7 +161,7 @@ style={{ border: 'none', outerWidth:'' }
 
              
                
-
+<MixAndMatchEditForm handleUpdateRound={updateRound}  />
 
 <ActivityDetailedSidebar activity={activity}/>
 

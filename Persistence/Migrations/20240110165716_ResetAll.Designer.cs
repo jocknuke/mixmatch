@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221202081551_AddCancelledProperty")]
-    partial class AddCancelledProperty
+    [Migration("20240110165716_ResetAll")]
+    partial class ResetAll
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,9 @@ namespace Persistence.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Gender")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
@@ -138,6 +141,127 @@ namespace Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid?>("ActivityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Domain.MixAndMatchGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool?>("Completed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CourtNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool?>("IsPlayoff")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RoundId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TeamOneScore")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TeamTwoScore")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.ToTable("MixAndMatchGames");
+                });
+
+            modelBuilder.Entity("Domain.MixAndMatchPlayer", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Team")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("totalPoints")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AppUserId", "GameId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("MixAndMatchPlayers");
+                });
+
+            modelBuilder.Entity("Domain.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Photos");
+                });
+
+            modelBuilder.Entity("Domain.UserFollowing", b =>
+                {
+                    b.Property<string>("ObserverId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TargetId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ObserverId", "TargetId");
+
+                    b.HasIndex("TargetId");
+
+                    b.ToTable("UserFollowings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -287,6 +411,78 @@ namespace Persistence.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("Domain.Comment", b =>
+                {
+                    b.HasOne("Domain.Activity", "Activity")
+                        .WithMany("Comments")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.AppUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Activity");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("Domain.MixAndMatchGame", b =>
+                {
+                    b.HasOne("Domain.Activity", "Activity")
+                        .WithMany("MixAndMatchGames")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+                });
+
+            modelBuilder.Entity("Domain.MixAndMatchPlayer", b =>
+                {
+                    b.HasOne("Domain.AppUser", "AppUser")
+                        .WithMany("Players")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.MixAndMatchGame", "Game")
+                        .WithMany("Players")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Game");
+                });
+
+            modelBuilder.Entity("Domain.Photo", b =>
+                {
+                    b.HasOne("Domain.AppUser", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("Domain.UserFollowing", b =>
+                {
+                    b.HasOne("Domain.AppUser", "Observer")
+                        .WithMany("Followings")
+                        .HasForeignKey("ObserverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.AppUser", "Target")
+                        .WithMany("Followers")
+                        .HasForeignKey("TargetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Observer");
+
+                    b.Navigation("Target");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -341,11 +537,28 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Activity", b =>
                 {
                     b.Navigation("Attendees");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("MixAndMatchGames");
                 });
 
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
                     b.Navigation("Activities");
+
+                    b.Navigation("Followers");
+
+                    b.Navigation("Followings");
+
+                    b.Navigation("Photos");
+
+                    b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("Domain.MixAndMatchGame", b =>
+                {
+                    b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
         }
