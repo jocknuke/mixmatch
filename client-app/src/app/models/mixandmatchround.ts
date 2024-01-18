@@ -20,7 +20,8 @@ export interface MixAndMatchRound {
   
 export interface MixAndMatchGame{
   
-    id?:string;
+    id?:number;
+    activityid:string;
     roundId?:number;
     courtNumber:number;
     players:MixAndMatchPlayer[] ;

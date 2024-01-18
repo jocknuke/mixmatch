@@ -15,6 +15,12 @@ namespace Application.Activities
         public string Venue { get; set; }
         public string HostUsername { get; set; }
         public bool IsCancelled { get; set; }
+
+        public decimal Price { get; set; }
+
+        public int? MaxAttendees { get; set; }
+
+
         public ICollection<AttendeeDto> Attendees { get; set; }
         public ICollection<CommentDto> Comments { get; set; }
         public ICollection<MixAndMatchDto> MixAndMatchGames { get; set; }

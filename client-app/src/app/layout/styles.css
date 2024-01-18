@@ -24,14 +24,14 @@ body {
   
 
   /* Full height */
-  height: 100%; 
+  height: 70%; 
 
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   
-  height: 100vh;
+  height: 60vh;
 }
 
 .masthead .ui.menu .ui.button,

@@ -29,6 +29,9 @@ export default observer(function ActivityForm() {
         date: Yup.string().required('Date is required').nullable(),
         venue: Yup.string().required(),
         city: Yup.string().required(),
+        price:Yup.number().required(),
+        maxattendees:Yup.number().integer().required()
+
     })
 
     useEffect(() => {
@@ -67,6 +70,8 @@ export default observer(function ActivityForm() {
                         <Header content='Location Details' sub color='teal' />
                         <MyTextInput name='venue' placeholder='Venue' />
                         <MyTextInput name='city' placeholder='city' />
+                        <MyTextInput name='price' placeholder='Price' />
+                        <MyTextInput name='maxAttendees' placeholder='MaxAttendees' />
                         <Button 
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={isSubmitting} 

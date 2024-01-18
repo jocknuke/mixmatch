@@ -120,13 +120,13 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
         setLastRoundPlayoffs(false);
         filteredData = people.filter((a) => a.gender === "M").slice(); // boys only
         break;
-     case 7: //play
+     case 7: //playoffs
 
         const top4Females=topPlayers.filter(x=>x.gender=="F").splice(0,4);
         const topMales=topPlayers.filter(x=>x.gender=="M").splice(0,4);
 
      
-        const top8=top4Females.concat(topMales);
+        const top8=top4Females.concat(topMales)
        
         top8.forEach((player) => {
 
@@ -135,11 +135,13 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
 
         })
         filteredData.sort((a, b) => (a.gender! > b.gender! ? 1 : -1));
+       
         if(lastRoundPlayoffs){
            
 
         [filteredData[0], filteredData[1]] = [filteredData[1], filteredData[0]];
         [filteredData[4], filteredData[5]] = [filteredData[5], filteredData[4]];
+        
         }else{
 
             setLastRoundPlayoffs(true);
@@ -174,7 +176,7 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
     let avg = 0;
 
 
-if(totalPlayers>4){
+if(totalPlayers>8){
     for (let i = 1; i <= totalAvailCourts; i++) {
       if (totalPlayers > 0) {
         avg = Math.floor(totalPlayers / countCourts / 2);
@@ -202,6 +204,7 @@ if(filteredData.length > 0) {
           completed: false,
           teamOneScore: 0,
           teamTwoScore: 0,
+          activityid:activity.id
         });
       }
     });
@@ -230,7 +233,7 @@ if(filteredData.length > 0) {
         }
 
 
-        if(filteredData.length>1){
+        if(filteredData.length>0){
 
 
             const user2 = filteredData.splice(0, 1)[0];
@@ -307,6 +310,7 @@ if(filteredData.length > 0) {
                 completed: false,
                 teamOneScore: 0,
                 teamTwoScore: 0,
+                activityid:activity.id
               });
             }
           });

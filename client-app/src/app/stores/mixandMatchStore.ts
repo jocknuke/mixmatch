@@ -86,7 +86,7 @@ export default class MixAndMatchStore {
             this.hubConnection.on('ReceiveGame', game => {
 
                 
-             
+            
 
                 runInAction(() => {
                     const _g=this.games.find(x=>x.id==game.id);
@@ -209,6 +209,8 @@ export default class MixAndMatchStore {
 
     updateGame = async (values: any) => {
        
+       
+
         values.ActivityId = store.activityStore.selectedActivity?.id;
         try {
 

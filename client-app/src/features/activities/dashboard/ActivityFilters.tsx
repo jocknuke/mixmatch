@@ -3,6 +3,7 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import { Header, Menu } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
+import ActivityMap from './ActivityMap';
 
 export default observer(function ActivityFilters() {
     const {activityStore: {predicate, setPredicate}} = useStore();
@@ -30,6 +31,7 @@ export default observer(function ActivityFilters() {
             <Calendar
                 onChange={(date: any) => setPredicate('startDate', date as Date)}
             />
+            
         </>
     )
 })

@@ -20,25 +20,6 @@ interface Props {
 }
 
 
-function getGamesByRoundId(games: MixAndMatchGame[]){
-
-
-  return Object.entries(
-            
-
-    games.reduce((group: {[key: string]: MixAndMatchGame[]}, item) => {
-        if (!group[item.roundId!]) {
-         group[item.roundId!] = [];
-        }
-        group[item.roundId!].push(item);
-        return group;
-       }, {} )
-
-)
-
-
-}
-
 
 export default observer(function MixAndMatchRoundsList({activity}: Props){
 
@@ -112,9 +93,9 @@ return (
 
   
 <>
-{console.log(JSON.stringify(mixandmatchStore.games))}
 
-  {getGamesByRoundId(mixandmatchStore.games).map(([group, games]) => (
+
+  {groupedGamesByRoundId.map(([group, games]) => (
 
 <SegmentGroup horizontal>
 

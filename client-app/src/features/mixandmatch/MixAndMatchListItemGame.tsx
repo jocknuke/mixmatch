@@ -3,7 +3,7 @@ import { Card, Image, Divider, Feed, Grid, Input, Header, Button, RevealContent,
 import { MixAndMatchGame } from "../../app/models/mixandmatchround";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { Form } from "react-router-dom";
 import { getuid } from "process";
 
@@ -26,21 +26,44 @@ const hide = {
  
 }
 
+interface scores{
+
+
+teamOneScore:number,
+teamTwoScore:number
+
+}
+
 
 export default observer(function MixAndMatchListItemGame({ game }: Props) {
 
   const { mixandmatchStore } = useStore();
-
-
-
   const [_game, setGameScore] = useState<MixAndMatchGame>(game);
+
+  useEffect(() => {
+   
+       
+    setGameScore(game);
+
+  
+
+   
+}, [game]);
+
+ 
 // React state to manage visibility
   const [showForm, setShowForm] = useState(false);
  
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
+  
     setGameScore({ ..._game, [name]: parseInt(value) });
   }
+
+
+
+
+
 
   // function to toggle the boolean value
   
@@ -60,23 +83,26 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+
    
+  
+
+    const data={
+
+      mixAndMatchGame:_game,
+     
+
+    }
+
+   
+    
+
+  mixandmatchStore.updateGame(data);
       
 
-      const data={
-
-        mixAndMatchGame:_game,
-       
-
-      }
-
-      console.log(data);
-
       
 
-      
-
-    mixandmatchStore.updateGame(data);
+  
 
     setShowForm(!showForm);
 
@@ -95,11 +121,13 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
    
   }
 
+
+
   return (
 
     <Card  >
       <Card.Content>
-        <Card.Header> Court {_game.courtNumber}</Card.Header>
+        <Card.Header> Court {game.courtNumber}</Card.Header>
       </Card.Content>
 
       <Card.Content>
@@ -110,7 +138,7 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
         
 
       <Feed>
-          {_game.players?.filter(p=>p.team===1).map(player => (
+          {game.players?.filter(p=>p.team===1).map(player => (
 
             <Feed.Event key={player.username}>
 
@@ -144,7 +172,7 @@ export default observer(function MixAndMatchListItemGame({ game }: Props) {
       <Grid.Column>
        
       <Feed>
-          {_game.players?.filter(p=>p.team===2).map(player => (
+          {game.players?.filter(p=>p.team===2).map(player => (
 
             <Feed.Event key={player.username}>
 

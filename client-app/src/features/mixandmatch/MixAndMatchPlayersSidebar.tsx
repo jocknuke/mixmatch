@@ -55,6 +55,8 @@ export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
 
 
     players=getPlayersBoard(mixandmatchStore.games);
+
+    
     
 
     const styles = {

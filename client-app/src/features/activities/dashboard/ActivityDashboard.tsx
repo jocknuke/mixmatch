@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Grid, Loader } from 'semantic-ui-react';
+import { Grid, Loader, Segment } from 'semantic-ui-react';
 import { PagingParams } from '../../../app/models/pagination';
 import { useStore } from '../../../app/stores/store';
 import ActivityFilters from './ActivityFilters';
 import ActivityList from './ActivityList';
 import ActivityListItemPlaceholder from './ActivityListItemPlaceHolder';
+import ActivityMap from './ActivityMap';
 
 export default observer(function ActivityDashboard() {
     const { activityStore } = useStore();
@@ -44,6 +45,11 @@ export default observer(function ActivityDashboard() {
             </Grid.Column>
             <Grid.Column width='6'>
                 <ActivityFilters />
+
+                <Segment>
+                <ActivityMap/>
+                </Segment>
+               
             </Grid.Column>
             <Grid.Column width='10'>
                 <Loader active={loadingNext} />

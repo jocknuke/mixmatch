@@ -53,7 +53,7 @@ namespace Application.Core
                    .ForMember(d => d.RoundId, o => o.MapFrom(s => s.RoundId))
                   .ForMember(d => d.TeamOneScore, o => o.MapFrom(s => s.TeamOneScore))
                   .ForMember(d => d.TeamTwoScore, o => o.MapFrom(s => s.TeamTwoScore))
-                .ForMember(d => d.Players, o => o.MapFrom(s => s.Players));
+                .ForMember(d => d.ActivityId, o => o.MapFrom(s => s.ActivityId));
 
                 CreateMap<MixAndMatchPlayer, PlayerDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))

@@ -6,6 +6,7 @@ namespace Application.MixAndMatch
     public class MixAndMatchDto
     {
         public int Id { get; set; }
+         public Guid ActivityId { get; set; }
         
         public int RoundId { get; set; }
 

@@ -14,7 +14,9 @@ export interface Activity {
     isHost?: boolean
     attendees: Profile[]
     host?: Profile;
-    
+    price:number;
+    maxAttendees:number;
+
 }
 
 export class ActivityFormValues
@@ -26,6 +28,8 @@ export class ActivityFormValues
     date: Date | null = null;
     city: string = '';
     venue: string = '';
+    price: number =0;
+    maxAttendees:number =0;
 
 	  constructor(activity?: ActivityFormValues) {
       if (activity) {
@@ -36,6 +40,8 @@ export class ActivityFormValues
         this.date = activity.date;
         this.venue = activity.venue;
         this.city = activity.city;
+        this.price=activity.price;
+        this.maxAttendees=activity.maxAttendees;
       }
     }
 
