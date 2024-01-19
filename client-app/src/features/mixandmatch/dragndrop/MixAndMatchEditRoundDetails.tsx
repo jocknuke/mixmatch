@@ -139,7 +139,7 @@ style={{ border: 'none', outerWidth:'' }
 
                 <Card.Group>
 
-                    <MixAndMatchEditRoundList  games={getCourtsAndTeams(gamesDetails)}/>
+                    <MixAndMatchEditRoundList activityid={activity.id}  games={getCourtsAndTeams(gamesDetails)}/>
 
   
 

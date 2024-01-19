@@ -30,7 +30,7 @@ export default observer(function ActivityForm() {
         venue: Yup.string().required(),
         city: Yup.string().required(),
         price:Yup.number().required(),
-        maxattendees:Yup.number().integer().required()
+        maxAttendees:Yup.number().integer().required()
 
     })
 

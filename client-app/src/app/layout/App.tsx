@@ -8,6 +8,7 @@ import { useStore } from '../stores/store';
 import { useEffect } from 'react';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
+import Footer from './Footer';
 
 function App() {
   const location = useLocation();
@@ -25,8 +26,11 @@ function App() {
 
   return (
     <>
+
+
+    
       <ModalContainer />
-      <NavBar />
+      <NavBar/>
       <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
       {location.pathname === '/' ? <HomePage /> : (
         <>
@@ -36,6 +40,8 @@ function App() {
           </Container>
         </>
       )}
+
+  
     </>
   );
 }

@@ -2,18 +2,20 @@ import { observer } from "mobx-react-lite"
 import React, { useState } from "react"
 import { MixAndMatchGameDragAndDrop } from "../../../app/models/mixandmatchround";
 import { DragDropContext, Draggable, DraggableLocation, DropResult, Droppable } from "react-beautiful-dnd";
-import { Button, Card, Feed, Grid, Icon, Image, Segment } from "semantic-ui-react";
+import { Button, Card, Divider, Feed, Form, Grid, Icon, Image, Segment } from "semantic-ui-react";
 import ActivityDetailedHeader from "../../activities/details/ActivityDetailedHeader";
 import ActivityDetailedInfo from "../../activities/details/ActivityDetailedInfo";
 import { Activity } from "../../../app/models/activity";
 import ActivityDetailedSidebar from "../../activities/details/ActivityDetailedSidebar";
 import MixAndMatchStore from "../../../app/stores/mixandMatchStore";
+import { useStore } from "../../../app/stores/store";
+import { NavLink } from "react-router-dom";
 
 
 
 interface Props {
     games: MixAndMatchGameDragAndDrop[];
-  
+   activityid:string;
    
   
   }
@@ -122,7 +124,44 @@ const reorder = (court: MixAndMatchGameDragAndDrop, team:number, startIndex: num
     //dragndropend
 
 
-export default observer(function MixAndMatchEditRoundList({  games }: Props) {
+export default observer(function MixAndMatchEditRoundList({  games, activityid }: Props) {
+  const { mixandmatchStore } = useStore();
+
+  const toggleShow: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+ 
+    e.preventDefault();
+
+   
+   
+    
+};
+
+
+  
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+
+   
+  
+
+    const data={
+
+     
+     
+
+    }
+
+   
+    
+
+  mixandmatchStore.updateGame(data);
+      
+
+      
+
+  }
 //dragndrop
 
 const [state, setState] = useState<MixAndMatchGameDragAndDrop[]>(games);
@@ -192,7 +231,7 @@ return (
 
 
 
-
+<>
                 
 
             <DragDropContext onDragEnd={onDragEnd}>
@@ -380,9 +419,38 @@ return (
         ))}
       </DragDropContext>
 
+      <Card>
+      <Card.Content>
+
+      <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
 
 
 
+
+
+
+    <Divider horizontal>
+      
+      </Divider>
+  
+       
+     
+  
+  <Button className="ui button">Save</Button>
+  <Button as={NavLink} to={`/activities/${activityid}`} className="ui button">Cancel</Button>
+
+
+
+
+</Form>
+
+      </Card.Content>
+
+      </Card>
+
+
+
+      </>
 
 
 )
