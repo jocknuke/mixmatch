@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+ StripeConfiguration.ApiKey = "sk_test_51OZmPBJ95Zs7Wt6O5pXHbWVbaCXwAnfWjWkY8fBHmf5ve7z3CMyrhxoLQEscZYX0qQj1ptK9f1Zih8LgyTQS5SgQ00p2TTDEU3";
 
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");

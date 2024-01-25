@@ -57,6 +57,7 @@ namespace Persistence
                 .HasOne(u => u.Game)
                 .WithMany(u => u.Players)
                 .HasForeignKey(aa => aa.GameId);
+                
 
 
 

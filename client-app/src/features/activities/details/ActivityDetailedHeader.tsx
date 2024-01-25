@@ -25,6 +25,17 @@ interface Props {
 
 export default observer(function ActivityDetailedHeader({ activity }: Props) {
     const { activityStore: { updateAttendeance, loading, cancelActivityToggle } } = useStore();
+
+    function handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event.preventDefault();
+    
+    
+      
+
+      
+          
+    
+      }
     return (
         <Segment.Group>
             <Segment basic attached='top' style={{ padding: '0' }}>
@@ -76,9 +87,15 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                     <Button onClick={updateAttendeance} 
                         loading={loading}>Cancel attendance</Button>
                 ) : (
+                    <>
                     <Button disabled={activity.isCancelled} onClick={updateAttendeance} 
                         loading={loading} color='teal'>Join Activity</Button>
+                        <Button  onClick={handleSubmit}  floated='right' color='purple' type="submit">
+                        Get Tickets
+                      </Button>
+                      </>
                 )}
+               
             </Segment>
         </Segment.Group>
     )

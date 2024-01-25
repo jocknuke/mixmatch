@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { Activity, ActivityFormValues } from '../models/activity';
+import { Activity, ActivityFormValues, CreateCheckoutSessionRequest, CreateCheckoutSessionResult } from '../models/activity';
 import { PaginatedResult } from '../models/pagination';
 import { Photo, Profile, UserActivity } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
@@ -82,7 +82,15 @@ const Activities = {
     create: (activity: ActivityFormValues) => requests.post<void>(`/activities`, activity),
     update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
     delete: (id: string) => requests.del<void>(`/activities/${id}`),
-    attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {})
+    attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {}),
+    /* listHomeActivities: (predicate: string) =>
+    requests.get<Activity[]>(`/activities?predicate=${predicate}`) */
+}
+
+const Stripe={
+
+    create: (req: CreateCheckoutSessionRequest) => requests.post<CreateCheckoutSessionResult>(`/checkout`, req)
+
 }
 
 
@@ -121,7 +129,8 @@ const agent = {
     Activities,
     Account,
     Profiles,
-    Games
+    Games,
+    Stripe
 }
 
 export default agent;

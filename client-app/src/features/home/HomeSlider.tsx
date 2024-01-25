@@ -36,13 +36,13 @@ export default function HomeSlider() {
     
     const activityImageTextStyle = {
         position: 'absolute',
-        bottom: '10%',
-        left: '5%',
+        bottom: '5%',
+        left: '25%',
         right: '5%',
-        width: '100%',
+        width: '50%',
         height: 'auto',
         color: 'white',
-        backgroundColor:'transparent',
+        backgroundColor:'#3c373757',
         border:'0',
     };
 

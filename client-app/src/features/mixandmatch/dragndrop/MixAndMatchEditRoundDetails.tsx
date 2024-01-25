@@ -70,6 +70,8 @@ export default observer(function MixAndMatchEditRoundDetails() {
    
    const activityid=searchParams.get('activityid');
    const roundid=searchParams.get('roundid');
+
+   
  
 
    useEffect(() => {
@@ -160,8 +162,7 @@ style={{ border: 'none', outerWidth:'' }
               
 
              
-               
-<MixAndMatchEditForm handleUpdateRound={updateRound}  />
+
 
 <ActivityDetailedSidebar activity={activity}/>
 

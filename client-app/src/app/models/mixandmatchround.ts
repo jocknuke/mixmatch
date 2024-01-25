@@ -37,11 +37,12 @@ export interface MixAndMatchGame{
   
 
  
-    team:number;
+    
     roundId?:number;
     courtNumber:number;
     teamOne:MixAndMatchPlayer[] ;
     teamTwo:MixAndMatchPlayer[] ;
+    gameId:number;
     
 
     
@@ -54,12 +55,16 @@ export interface MixAndMatchGame{
       this.teamOne=game.players.filter(p=>p.team==1);
       this.teamTwo=game.players.filter(p=>p.team==2);
       this.courtNumber=game.courtNumber;
-
+      this.roundId=game.roundId;
+      this.gameId=game.id!;
 
 
     }
 
     
+
+
+
 
 
   }

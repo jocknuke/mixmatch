@@ -141,7 +141,7 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
 
         [filteredData[0], filteredData[1]] = [filteredData[1], filteredData[0]];
         [filteredData[4], filteredData[5]] = [filteredData[5], filteredData[4]];
-        
+
         }else{
 
             setLastRoundPlayoffs(true);
@@ -424,7 +424,7 @@ if(filteredData.length > 0) {
 
   return (
     <>
-      <Segment
+      <Segment  
         textAlign="center"
         style={{ border: "none" }}
         attached="top"
@@ -495,8 +495,14 @@ if(filteredData.length > 0) {
               </Form.Field>
             ))}
           </Form.Field>
+          <Form.Field >
+            <Segment  basic clearing>
 
-          <Button type="submit">Create Matches</Button>
+            <Button floated="left" type="submit">Create Matches</Button>
+            </Segment>
+
+          
+          </Form.Field>
         </Form>
       </Segment>
     </>

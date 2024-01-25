@@ -1,9 +1,10 @@
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
-import { Item, Button, Icon, Image, Segment, Label } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { Item, Button, Icon, Image, Segment, Label, Form, SegmentGroup, Grid, GridColumn, Container, GridRow } from "semantic-ui-react";
+import { Activity, CreateCheckoutSessionRequest } from "../../../app/models/activity";
 import ActivityListItemAttendee from "./ActivityListItemAttendee";
 import ActivityListItemAttendeesFollowing from "./ActivityListItemAttendeesFollowing";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
     activity: Activity
@@ -24,7 +25,34 @@ const activityImageTextStyle = {
 };
 
 
+
+
 export default function ActivityListItem({ activity }: Props) {
+
+    const { activityStore } = useStore();
+
+    function handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event.preventDefault();
+    
+    
+        const request:CreateCheckoutSessionRequest={
+
+            priceId : 'price_1Obw2KJ95Zs7Wt6OtutfNARH',
+		
+            successUrl : '',
+            
+            failureUrl : ''
+
+        }
+       
+      // const result= activityStore.createStripePayment(request);
+
+      
+          
+    
+      }
+
+
     return (
 
         
@@ -72,14 +100,26 @@ export default function ActivityListItem({ activity }: Props) {
                 <ActivityListItemAttendeesFollowing attendees={activity.attendees!} />
             </Segment>
             <Segment clearing>
-                <span>{activity.description}</span>
+
+    <span>{activity.description}</span>
+   
+    
+       
+   
+        <Button  onClick={handleSubmit}  floated='right' color='purple' type="submit">
+          Get Tickets
+        </Button>
+      
                 <Button
                     as={Link}
                     to={`/activities/${activity.id}`}
                     color='teal'
                     floated='right'
-                    content='View'
+                    content='View Details'
                 />
+             
+   
+      
             </Segment>
         </Segment.Group>
     )

@@ -70,7 +70,9 @@ export default observer(function ActivityForm() {
                         <Header content='Location Details' sub color='teal' />
                         <MyTextInput name='venue' placeholder='Venue' />
                         <MyTextInput name='city' placeholder='city' />
+                        <Header content='Price' sub color='teal' />
                         <MyTextInput name='price' placeholder='Price' />
+                        <Header content='Available tickets' sub color='teal' />
                         <MyTextInput name='maxAttendees' placeholder='MaxAttendees' />
                         <Button 
                             disabled={isSubmitting || !dirty || !isValid}

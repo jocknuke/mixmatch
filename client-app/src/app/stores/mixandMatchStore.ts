@@ -100,6 +100,84 @@ export default class MixAndMatchStore {
                 })
             })
 
+            this.hubConnection.on('ReceiveGamesList', (_games:MixAndMatchGame[]) => {
+
+              
+
+                console.log(JSON.stringify(this.games));
+               
+              console.log(JSON.stringify(_games));
+               
+
+                runInAction(() => {
+
+
+                    _games.forEach(updatedGame=>{
+
+
+
+                        const courtGame=this.games.find(x=>x.roundId==updatedGame.roundId && x.courtNumber==updatedGame.courtNumber);
+                                if(courtGame ){
+
+
+                                    updatedGame.players.forEach(p=>{
+
+
+
+                                    let _player=courtGame.players.find(x=>x.appUserId==p.appUserId );
+
+                                    if(_player!=null){
+
+                                      
+
+                                    }
+
+
+
+
+
+                                
+
+
+                        
+
+                                    })
+            
+                                   
+                                
+                                
+                                
+                                }
+
+
+
+                            
+
+
+
+
+
+
+
+                    })
+
+
+
+
+                  
+
+                   
+                    
+
+                })
+            })
+
+
+
+
+
+            
+
             
         }
     }
@@ -121,6 +199,14 @@ export default class MixAndMatchStore {
     clearGamesDetails = () => {
         this.gamesDetails = [];
     }
+
+   /*   findId(id:string, arr:MixAndMatchGame[]) {
+        return arr.reduce((a, item) => {
+          if (a) return a;
+          if (item.players === id) return item;
+          if (item.children) return findId(id, item.children);
+        }, null);
+      } */
 
     addGame = async (values: any) => {
         values.activityId = store.activityStore.selectedActivity?.id;
@@ -227,6 +313,34 @@ export default class MixAndMatchStore {
             console.log(error);
         }
     }
+
+
+    updateGamesList = async (values: any) => {
+       
+       
+
+        values.ActivityId = store.activityStore.selectedActivity?.id;
+
+
+
+        try {
+
+
+         
+           
+           
+           
+         
+            await this.hubConnection?.invoke('UpdateGamesList', values);
+
+           
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
 
 
     get groupedGamesByRoundId() {

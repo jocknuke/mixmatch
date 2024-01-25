@@ -35,10 +35,7 @@ export default observer(function MixAndMatchEdiotForm({ handleUpdateRound }: Pro
       <Segment attached>
         <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
    
-
-        
-
-          <Button type="submit">Update Matches</Button>
+ <Button type="submit">Update Matches</Button>
         </Form>
       </Segment>
     </>

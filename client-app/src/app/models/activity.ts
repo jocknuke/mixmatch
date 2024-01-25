@@ -47,6 +47,26 @@ export class ActivityFormValues
 
   }
 
+  export class CreateCheckoutSessionRequest
+  
+  {
+  priceId : string ='';
+		
+  successUrl : string='';
+  
+  failureUrl : string='';
+
+}
+
+export class CreateCheckoutSessionResult
+  
+{
+priceId : string ='';
+  
+session_Url : string='';
+
+}
+
   export class Activity implements Activity {
     constructor(init?: ActivityFormValues) {
       Object.assign(this, init);

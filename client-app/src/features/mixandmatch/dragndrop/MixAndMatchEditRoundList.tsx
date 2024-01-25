@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
-import React, { useState } from "react"
-import { MixAndMatchGameDragAndDrop } from "../../../app/models/mixandmatchround";
+import React, { useEffect, useState } from "react"
+import { MixAndMatchGame, MixAndMatchGameDragAndDrop, MixAndMatchPlayer } from "../../../app/models/mixandmatchround";
 import { DragDropContext, Draggable, DraggableLocation, DropResult, Droppable } from "react-beautiful-dnd";
 import { Button, Card, Divider, Feed, Form, Grid, Icon, Image, Segment } from "semantic-ui-react";
 import ActivityDetailedHeader from "../../activities/details/ActivityDetailedHeader";
@@ -10,6 +10,7 @@ import ActivityDetailedSidebar from "../../activities/details/ActivityDetailedSi
 import MixAndMatchStore from "../../../app/stores/mixandMatchStore";
 import { useStore } from "../../../app/stores/store";
 import { NavLink } from "react-router-dom";
+import { runInAction } from "mobx";
 
 
 
@@ -97,6 +98,10 @@ const reorder = (court: MixAndMatchGameDragAndDrop, team:number, startIndex: num
     
     result[droppableSource.droppableId] = source;
     result[droppableDestination.droppableId] = destination;
+
+
+
+
     
     return result;
     };
@@ -126,6 +131,16 @@ const reorder = (court: MixAndMatchGameDragAndDrop, team:number, startIndex: num
 
 export default observer(function MixAndMatchEditRoundList({  games, activityid }: Props) {
   const { mixandmatchStore } = useStore();
+  useEffect(() => {
+    if (activityid) {
+       
+        mixandmatchStore.createHubConnection(activityid);
+
+    }
+
+   
+}, [mixandmatchStore, activityid]);
+
 
   const toggleShow: React.MouseEventHandler<HTMLButtonElement> = (e) => {
  
@@ -133,7 +148,7 @@ export default observer(function MixAndMatchEditRoundList({  games, activityid }
 
    
    
-    
+  
 };
 
 
@@ -143,20 +158,16 @@ export default observer(function MixAndMatchEditRoundList({  games, activityid }
     event.preventDefault();
 
 
+    
    
   
 
-    const data={
 
-     
-     
-
-    }
 
    
     
 
-  mixandmatchStore.updateGame(data);
+  
       
 
       
@@ -184,6 +195,12 @@ const onDragEnd = (result: DropResult) => {
   const sInd = sourceId;
   const dInd = destId;
 
+
+  console.log('sourceId:' + sInd + 'destId:' + dInd);
+
+  console.log('sourceTeam:' + sourceTeam + 'destTeam:' + destTeam);
+
+
   
 
   if (sInd === dInd && sourceTeam==destTeam )  {
@@ -200,6 +217,9 @@ const onDragEnd = (result: DropResult) => {
 
     setState(newState);
 
+
+    
+
   
   }
   
@@ -207,24 +227,147 @@ const onDragEnd = (result: DropResult) => {
 
 
 
-
     const result = move(state.find(x=>x.courtNumber==sInd)!, state.find(x=>x.courtNumber==dInd)!, source, destination, sourceTeam, destTeam);
     const newState = [...state];
 
-    newState.find(x=>x.courtNumber==sInd)!.teamOne=result[sInd].teamOne;
-    newState.find(x=>x.courtNumber==sInd)!.teamTwo=result[sInd].teamTwo;
-
-    newState.find(x=>x.courtNumber==dInd)!.teamOne=result[dInd].teamOne;
-    newState.find(x=>x.courtNumber==dInd)!.teamTwo=result[dInd].teamTwo;
     
 
-    
-        setState(newState);
+    newState.find(x=>x.courtNumber==sInd)!.teamOne=result[source.droppableId].teamOne;
+    newState.find(x=>x.courtNumber==sInd)!.teamTwo=result[source.droppableId].teamTwo;
 
+    newState.find(x=>x.courtNumber==dInd)!.teamOne=result[destination.droppableId].teamOne;
+    newState.find(x=>x.courtNumber==dInd)!.teamTwo=result[destination.droppableId].teamTwo;
+
+
+
+
+    setState(newState);
+
+    const results:MixAndMatchGame[]=[];
+
+
+    const courtSourcePlayers:MixAndMatchPlayer[]=[];
+    const courtDestPlayers:MixAndMatchPlayer[]=[];
+
+  
+    result[source.droppableId].teamOne.forEach(player=>{
+
+      runInAction(() => {
+                    
+        player.team=1;
+    })
+     
+
+      courtSourcePlayers.push(player);
+
+     
+
+  })
+
+  result[source.droppableId].teamTwo.forEach(player=>{
+
+    runInAction(() => {
+                    
+      player.team=2;
+  })
+
+    
+    courtSourcePlayers.push(player);
+   
+
+ })
+
+ result[destination.droppableId].teamOne.forEach(player=>{
+
+
+  runInAction(() => {
+                    
+    player.team=1;
+})
+
+  
+
+  courtDestPlayers.push(player);
+
+ 
+
+})
+
+result[destination.droppableId].teamTwo.forEach(player=>{
+
+ 
+  runInAction(() => {
+                    
+    player.team=2;
+})
+
+courtDestPlayers.push(player);
+
+
+})
+
+const court1:MixAndMatchGame={
+
+players:courtSourcePlayers,
+roundId:games[0].roundId,
+courtNumber:sInd,
+activityid:activityid,
+completed:false,
+isPlayoff:false,
+id:games[0].gameId,
+teamOneScore:0,
+teamTwoScore:0
+
+
+
+}
+
+results.push(court1);
+
+const court2:MixAndMatchGame={
+
+  players:courtDestPlayers,
+  roundId:games[0].roundId,
+  courtNumber:dInd,
+  activityid:activityid,
+  completed:false,
+  isPlayoff:false,
+  id:games[0].gameId,
+  teamOneScore:0,
+  teamTwoScore:0
+  
+  
+  
+  }
+
+  results.push(court2); 
+
+
+
+
+
+    
+   
+     const data={
+
+      MixAndMatchGames:results,
+     
+
+    } 
+
+  
+
+     mixandmatchStore.updateGamesList(data);
+
+
+
+    
     
   }
 };
 //dragndrop
+
+
 
 
 return (
@@ -251,55 +394,55 @@ return (
 <Feed>
 
 
-          <Droppable key={ind} droppableId={`${el.courtNumber}-1`}>
+<Droppable key={`${ind}-1`} droppableId={`${el.courtNumber}-1`}>
 
 
 
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                style={getListStyle(snapshot.isDraggingOver)}
-                {...provided.droppableProps}
-              >
-                {el.teamOne.map((item, index) => (
-                   <Draggable
-                   key={item.appUserId}
-                   draggableId={item.appUserId}
-                   index={index}
-                 >
-                   {(provided, snapshot) => (
-                     <div
-                       ref={provided.innerRef}
-                       {...provided.draggableProps}
-                       {...provided.dragHandleProps}
-                       style={getItemStyle(
-                         snapshot.isDragging,
-                         provided.draggableProps.style
-                       )}
-                     >
-                       <div
-                         style={{
-                           display: "flex",
-                           justifyContent: "space-between"
-                         }}
-                       >
+{(provided, snapshot) => (
+  <div
+    ref={provided.innerRef}
+    style={getListStyle(snapshot.isDraggingOver)}
+    {...provided.droppableProps}
+  >
+    {el.teamOne.map((item, index) => (
+       <Draggable
+       key={item.appUserId}
+       draggableId={item.appUserId}
+       index={index}
+     >
+       {(provided, snapshot) => (
+         <div
+           ref={provided.innerRef}
+           {...provided.draggableProps}
+           {...provided.dragHandleProps}
+           style={getItemStyle(
+             snapshot.isDragging,
+             provided.draggableProps.style
+           )}
+         >
+           <div
+             style={{
+               display: "flex",
+               justifyContent: "space-between"
+             }}
+           >
+
 
 <Image size='mini'
-              style={item.gender=='F' ? female : male}
-              bordered
-              circular
-              src={item.image || `/assets/user.png`} />
+  style={item.gender=='F' ? female : male}
+  bordered
+  circular
+  src={item.image || `/assets/user.png`} />
 
+{item.displayName}
 
-  {item.displayName}
-
-  <Button size="mini" icon onClick={() => {
-                             const newState = [...state];
-                             newState[ind].teamOne.splice(index, 1);
-                             setState(
-                               newState.filter((group) => group.teamOne.length +  group.teamTwo.length)
-                             );
-                           }}> 
+<Button size="mini" icon onClick={() => {
+                 const newState = [...state];
+                 newState[ind].teamOne.splice(index, 1);
+                 setState(
+                   newState.filter((group) => group.teamOne.length +  group.teamTwo.length)
+                 );
+               }}> 
 <Icon name='delete' />
 </Button>
   
@@ -330,7 +473,7 @@ return (
           <Grid.Column>
           <Feed>
 
-       <Droppable key={ind} droppableId={`${el.courtNumber}-2`}>
+       <Droppable key={`${ind}-2`} droppableId={`${el.courtNumber}-2`}>
 
 
 
@@ -374,7 +517,7 @@ return (
 
   <Button size="mini" icon onClick={() => {
                              const newState = [...state];
-                             newState[ind].teamOne.splice(index, 1);
+                             newState[ind].teamTwo.splice(index, 1);
                              setState(
                                newState.filter((group) => group.teamOne.length +  group.teamTwo.length)
                              );
@@ -419,34 +562,7 @@ return (
         ))}
       </DragDropContext>
 
-      <Card>
-      <Card.Content>
-
-      <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-
-
-
-
-
-
-    <Divider horizontal>
       
-      </Divider>
-  
-       
-     
-  
-  <Button className="ui button">Save</Button>
-  <Button as={NavLink} to={`/activities/${activityid}`} className="ui button">Cancel</Button>
-
-
-
-
-</Form>
-
-      </Card.Content>
-
-      </Card>
 
 
 

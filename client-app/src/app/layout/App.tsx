@@ -5,7 +5,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import { ToastContainer } from 'react-toastify';
 import { useStore } from '../stores/store';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import Footer from './Footer';
@@ -21,6 +21,18 @@ function App() {
       commonStore.setAppLoaded()
     }
   }, [commonStore, userStore])
+
+ 
+
+ interface MessageProps {
+  message: string;
+}
+
+const Message: FC<MessageProps> = ({ message }) => (
+  <section>
+    <p>{message}</p>
+  </section>
+);
 
   if (!commonStore.appLoaded) return <LoadingComponent content='Loading app...' />
 

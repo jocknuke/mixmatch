@@ -82,6 +82,33 @@ namespace API.SignalR
                   
            
         }
+    public async Task UpdateGamesList(EditList.Command command)
+        {
+            try
+            {
+                 
+
+
+                 var round = await _mediator.Send(command);
+
+                         
+
+                
+
+             await Clients.Group(command.ActivityId.ToString()).SendAsync("ReceiveGamesList", round.Value);
+                
+            }
+            catch (System.Exception ex)
+            {
+                  Console.Write("Hub ERROR:" + ex.Message);
+            }
+                  
+           
+        }
+
+
+
+        
 
         public override async Task OnConnectedAsync()
         {
