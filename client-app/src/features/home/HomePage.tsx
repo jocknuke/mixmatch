@@ -179,7 +179,7 @@ Instant messaging features for real-time communication during the event.
       
      
         <Segment vertical>
-        <ActivityHomeTab username={userStore.user?.username} />
+        <ActivityHomeTab  />
         </Segment>
         <Segment vertical>
           <Grid columns={2}>

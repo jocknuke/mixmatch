@@ -14,6 +14,7 @@ export default class ActivityStore {
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
     predicate = new Map().set('all', true);
+    homeActivities:Activity[]=[];
 
     constructor() {
         makeAutoObservable(this);
@@ -100,6 +101,23 @@ export default class ActivityStore {
         } catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
+        }
+    }
+
+    loadHomeActivities = async (predicate?: string) => {
+        this.loadingInitial = true;
+        try {
+            const activities = await agent.Activities.listHomeActivities(predicate!);
+            console.log(JSON.stringify(activities))
+            runInAction(() => {
+                this.homeActivities = activities;
+                this.loadingInitial = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loadingInitial = false;
+            })
         }
     }
 

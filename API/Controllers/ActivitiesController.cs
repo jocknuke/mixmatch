@@ -6,12 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Route("api/[controller]")]
     public class ActivitiesController : BaseApiController
     {
-        [HttpGet]
+         [HttpGet]
         public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
+             Console.WriteLine("########### WRONG CONTROLLER ##############");
+           
             return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
+        }
+         [HttpGet("[action]")]
+        public async Task<IActionResult> GeHomeActivities([FromQuery] string predicate)
+
+        
+        {
+             Console.WriteLine("########### RIGHT CONTROLLER ##############");
+           
+             return HandleResult(await Mediator.Send(new ListActivities.Query { Predicate = predicate }));
         }
 
         [HttpGet("{id}")]
@@ -46,5 +58,9 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
         }
+
+
+       
+
     }
 }

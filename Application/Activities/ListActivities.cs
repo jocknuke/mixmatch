@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -19,30 +20,68 @@ namespace Application.Activities
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+              private readonly IUserAccessor _userAccessor;
+           public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _mapper = mapper;
                 _context = context;
             }
-
             public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var query = _context.Activities
-                    .OrderBy(a => a.Date)
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
-                    .AsQueryable();
                 
-                var today = DateTime.UtcNow;
 
-                query = request.Predicate switch
+                    
+                    var activities = new List<ActivityDto>();
+
+
+       
+ var today = DateTime.UtcNow;
+
+Console.WriteLine("#########################");
+
+Console.WriteLine(request.Predicate);
+
+Console.WriteLine("#########################");
+               
+
+                switch (request.Predicate)
                 {
-                    "popular" => query.GroupBy(m => m.Attendees)
-                    .OrderByDescending(g => g.Count()).SelectMany(g => g),
-                    "future" => query.Where(a => a.Date <= today),
-                    _ => query.Where(a => a.Date >= today)
-                };
+                    case "popular":
+                        activities = await _context.Activities.Where(a => a.Date >= today)
+                   
+                    .OrderBy(d => d.Date)
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                    .OrderByDescending(x=>x.Attendees.Count())
+                    .ToListAsync();
+                        break;
+                    case "future":
+                        activities = await _context.Activities.Where(a => a.Date >= today)
+                   
+                    .OrderBy(d => d.Date)
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                    .ToListAsync();
+                        break;
 
-                var activities = await query.ToListAsync();
+                    case "isgoing":
+                        activities = await _context.Activities.Where(a => a.Date >= today)
+                   
+                    .OrderBy(d => d.Date)
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                    .Where(x => x.Attendees.Any(a => a.Username == _userAccessor.GetUsername()))
+                    .ToListAsync();
+                        break;
+
+                     default:
+                        activities = await _context.Activities.Where(a => a.Date >= today)
+                   
+                    .OrderBy(d => d.Date)
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                    .OrderByDescending(x=>x.Attendees.Count())
+                    .ToListAsync();
+                        break;
+
+                }
 
                 return Result<List<ActivityDto>>.Success(activities);
             }

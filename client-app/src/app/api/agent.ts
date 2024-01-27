@@ -7,6 +7,7 @@ import { User, UserFormValues } from '../models/user';
 import { router } from '../router/Routes';
 import { store } from '../stores/store';
 import { MixAndMatchGame } from '../models/mixandmatchround';
+import { request } from 'http';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -83,8 +84,7 @@ const Activities = {
     update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
     delete: (id: string) => requests.del<void>(`/activities/${id}`),
     attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {}),
-    /* listHomeActivities: (predicate: string) =>
-    requests.get<Activity[]>(`/activities?predicate=${predicate}`) */
+    listHomeActivities: (predicate: string) =>  requests.get<Activity[]>(`/activities/GeHomeActivities?predicate=${predicate}`) 
 }
 
 const Stripe={

@@ -31,26 +31,7 @@ export default function ActivityListItem({ activity }: Props) {
 
     const { activityStore } = useStore();
 
-    function handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        event.preventDefault();
-    
-    
-        const request:CreateCheckoutSessionRequest={
-
-            priceId : 'price_1Obw2KJ95Zs7Wt6OtutfNARH',
-		
-            successUrl : '',
-            
-            failureUrl : ''
-
-        }
-       
-      // const result= activityStore.createStripePayment(request);
-
-      
-          
-    
-      }
+   
 
 
     return (
@@ -106,9 +87,7 @@ export default function ActivityListItem({ activity }: Props) {
     
        
    
-        <Button  onClick={handleSubmit}  floated='right' color='purple' type="submit">
-          Get Tickets
-        </Button>
+      
       
                 <Button
                     as={Link}

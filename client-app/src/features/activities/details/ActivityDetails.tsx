@@ -15,6 +15,7 @@ import { Profile } from "../../../app/models/profile";
 import MixAndMatchForm from "../../mixandmatch/form/MixAndMatchForm";
 import MixAndMatchPlayersSidebar from "../../mixandmatch/MixAndMatchPlayersSidebar";
 import { roundTypeOptions } from "../../../app/common/options/mixandmatchOptions";
+import ActivityGetTickets from "./ActivityGetTickets";
 
 
 
@@ -68,6 +69,7 @@ export default observer(function ActivityDetails() {
 
             </Grid.Column>
             <Grid.Column width='6'>
+            <ActivityGetTickets activity={activity}/>
            
               
             {
@@ -79,6 +81,8 @@ export default observer(function ActivityDetails() {
               {
  activity.category=='mixandmatch' && (<MixAndMatchPlayersSidebar   activity={activity}/>)
 }
+
+
 <ActivityDetailedSidebar activity={activity}/>
 
 

@@ -6,44 +6,44 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useStore } from '../../../app/stores/store';
 import { UserActivity } from '../../../app/models/profile';
+import { Activity } from '../../../app/models/activity';
 
 
 const panes = [
     { menuItem: 'Popular Events', pane: { key: 'popular' } },
     { menuItem: 'Future Events', pane: { key: 'future' } },
     
-    { menuItem: 'Participating', pane: { key: 'participating' } }
+    { menuItem: 'Participating', pane: { key: 'isgoing' } }
 ];
 
-interface Props {
-    username: string | undefined
-}
 
-export default observer(function ActivityHomeTab({ username }: Props) {
-    const { profileStore } = useStore();
+
+export default observer(function ActivityHomeTab() {
+
+
+    const { activityStore } = useStore();
     const {
-        loadUserActivities,
-        profile,
-        loadingActivities,
-        userActivities
-    } = profileStore;
+        loadHomeActivities,
+        loadingInitial,
+        homeActivities
+    } = activityStore;
 
     useEffect(() => {
-        if(username != undefined)
-        loadUserActivities(username);
-    }, [loadUserActivities, profile]);
+        
+        loadHomeActivities();
+    }, [loadHomeActivities]);
 
    
 
     const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
-        alert('tab')
-        loadUserActivities(profile!.username, panes[data.activeIndex as number].pane.key);
+       
+        loadHomeActivities(panes[data.activeIndex as number].pane.key);
     };
 
 
 
     return (
-        <Tab.Pane loading={loadingActivities}>
+        <Tab.Pane loading={loadingInitial}>
             <Grid stackable>
                 <Grid.Column width={16}>
                     <Header floated='left'  content={'Best events in Charlotte'} />
@@ -61,7 +61,7 @@ export default observer(function ActivityHomeTab({ username }: Props) {
                     
                     <br />
                     <Card.Group itemsPerRow={4}>
-                        {userActivities.map((activity: UserActivity) => (
+                        {homeActivities.map((activity: Activity) => (
                             <Card
                                 as={Link}
                                 to={`/activities/${activity.id}`}
@@ -74,8 +74,10 @@ export default observer(function ActivityHomeTab({ username }: Props) {
                                 <Card.Content>
                                     <Card.Header textAlign='center'>{activity.title}</Card.Header>
                                     <Card.Meta textAlign='center'>
-                                        <div>{format(new Date(activity.date), 'do LLL')}</div>
-                                        <div>{format(new Date(activity.date), 'h:mm a')}</div>
+                                   
+                                        <div>{format(new Date(activity.date!), 'do LLL')}</div>
+                                        <div>{format(new Date(activity.date!), 'h:mm a')}</div>
+                                        
                                     </Card.Meta>
                                 </Card.Content>
                             </Card>

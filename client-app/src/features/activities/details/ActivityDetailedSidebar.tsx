@@ -1,4 +1,4 @@
-import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
+import { Segment, List, Label, Item, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { Activity } from '../../../app/models/activity'
@@ -11,6 +11,12 @@ export default observer(function ActivityDetailedSidebar ({activity: {attendees,
     if (!attendees) return null;
     return (
         <>
+
+
+
+
+
+
             <Segment
                 textAlign='center'
                 style={{ border: 'none' }}
