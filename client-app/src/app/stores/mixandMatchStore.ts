@@ -29,7 +29,7 @@ export default class MixAndMatchStore {
         if (store.activityStore.selectedActivity) {
             
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl('http://localhost:5000/mixandmatchhub?activityId=' + activityId, {
+                .withUrl(process.env.REACT_APP_MIXANDMATCH_URL + '?activityId=' + activityId, {
                     accessTokenFactory: () => store.userStore.user?.token!
                 })
                 .withAutomaticReconnect()
