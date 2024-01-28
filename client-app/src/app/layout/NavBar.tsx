@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
 export default observer(function NavBar() {
-    const {userStore: {user, logout}} = useStore();
+    const {userStore: {user, logout, isLoggedIn}} = useStore();
 
     type State = {
         dropdownMenuStyle: {
@@ -61,15 +61,35 @@ export default observer(function NavBar() {
                 <Menu.Item>
                     <Button as={NavLink} to='/createActivity' positive content='Create Event' />
                 </Menu.Item>
+                {isLoggedIn ? (
                 <Menu.Item position='right'>
+            
+                  <>
                     <Image avatar spaced='right' src={user?.image || '/assets/user.png'} />
                     <Dropdown pointing='top left' text={user?.displayName}>
                         <Dropdown.Menu>
                             <Dropdown.Item as={Link} to={`/profiles/${user?.username}`} text='My Profile' icon='user' />
+
+                           
                             <Dropdown.Item onClick={logout} text='Logout' icon='power' />
+                           
+                           
+                           
                         </Dropdown.Menu>
                     </Dropdown>
-                </Menu.Item>
+                    
+                    </>
+                    </Menu.Item>
+                    ):(
+                            
+                      <Menu.Item position='right' as={NavLink} to='/login' name='Login' />
+                    
+               
+ )
+}
+
+
+               
             </Container>
         </Menu>
           </Container>

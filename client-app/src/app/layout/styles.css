@@ -196,6 +196,6 @@ background-size: cover;
 .homeloggedin {
   display: flex;
   align-items: center;
- 
+ width: 100%;
   height: 100vh;
 }

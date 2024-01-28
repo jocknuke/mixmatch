@@ -9,23 +9,31 @@ import ProfilePage from "../../features/profiles/ProfilePage";
 import LoginForm from "../../features/users/LoginForm";
 import App from "../layout/App";
 import MixAndMatchEditRoundDetails from "../../features/mixandmatch/dragndrop/MixAndMatchEditRoundDetails";
+import RequireAuth from "./RequireAuth";
+import RegisterPage from "../../features/home/RegisterPage";
 
 export const routes: RouteObject[] = [
     {
         path: '/',
         element: <App />,
         children: [
-            {path: 'activities', element: <ActivityDashboard />},
-            {path: 'activities/:id', element: <ActivityDetails />},
-            {path: 'createActivity', element: <ActivityForm key='create' />},
-            {path: 'manage/:id', element: <ActivityForm key='manage' />},
-            {path: 'profiles/:username', element: <ProfilePage />},
+
+            {element: <RequireAuth />, children: [
+                {path: 'activities', element: <ActivityDashboard />},
+                {path: 'activities/:id', element: <ActivityDetails />},
+                {path: 'createActivity', element: <ActivityForm key='create' />},
+                {path: 'manage/:id', element: <ActivityForm key='manage' />},
+                {path: 'profiles/:username', element: <ProfilePage />},
+                {path: 'errors', element: <TestErrors />},
+                {path: 'manage/games/', element: <MixAndMatchEditRoundDetails key='edit' />}
+            ]},
+          
             {path: 'login', element: <LoginForm />},
-            {path: 'errors', element: <TestErrors />},
+            {path: 'register', element: <RegisterPage />},
             {path: 'not-found', element: <NotFound />},
             {path: 'server-error', element: <ServerError />},
             {path: '*', element: <Navigate replace to='/not-found' />},
-            {path: 'manage/games/', element: <MixAndMatchEditRoundDetails key='edit' />}
+            
         ]
     }
 ]

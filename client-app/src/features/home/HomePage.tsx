@@ -65,7 +65,7 @@ export default observer(function HomePage() {
 
         <div >
 
-{userStore.isLoggedIn ? (
+
             <>
                <HomeSlider/>
       
@@ -195,26 +195,9 @@ Instant messaging features for real-time communication during the event.
       </Container>
    
             </>
-        ) : (
-
-            <div style={bgStyle}>
-
-              <Segment  textAlign='center' vertical className='homeloggedin' >
-            <Container text>
-                <Header as='h1' inverted>
-                    <Image size='massive' src='/assets/logo.png' alt='logo' style={{ marginBottom: 12 }} />
-                    Mix and match!
-                </Header>
-                <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
-                            Login!
-                        </Button>
-                        <Button onClick={() => modalStore.openModal(<RegsiterForm />)} size='huge' inverted>
-                            Register
-                        </Button>
-            </Container>
-        </Segment>
-        </div>
-        )}
+        
+        
+        
 
       </div>
      

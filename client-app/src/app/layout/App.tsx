@@ -1,7 +1,7 @@
 import { Container } from 'semantic-ui-react';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import { ToastContainer } from 'react-toastify';
 import { useStore } from '../stores/store';
@@ -40,18 +40,23 @@ const Message: FC<MessageProps> = ({ message }) => (
     <>
 
 
-    
+    <ScrollRestoration/>
       <ModalContainer />
       <NavBar/>
       <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
-      {location.pathname === '/' ? <HomePage /> : (
+      {location.pathname === '/' ? <HomePage /> :location.pathname === '/register' ? (
         <>
           
-          <Container style={{ marginTop: '7em' }}>
+         
             <Outlet />
-          </Container>
+         
         </>
-      )}
+      ):(<>
+          
+        <Container style={{ marginTop: '5em' }}>
+          <Outlet />
+        </Container>
+      </>)}
 
   
     </>

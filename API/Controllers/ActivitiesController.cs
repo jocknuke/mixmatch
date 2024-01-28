@@ -12,16 +12,17 @@ namespace API.Controllers
          [HttpGet]
         public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
-             Console.WriteLine("########### WRONG CONTROLLER ##############");
+            
            
             return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }
+        [AllowAnonymous]
          [HttpGet("[action]")]
         public async Task<IActionResult> GeHomeActivities([FromQuery] string predicate)
 
         
         {
-             Console.WriteLine("########### RIGHT CONTROLLER ##############");
+            
            
              return HandleResult(await Mediator.Send(new ListActivities.Query { Predicate = predicate }));
         }
