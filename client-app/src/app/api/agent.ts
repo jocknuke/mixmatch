@@ -84,7 +84,7 @@ const Activities = {
     update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
     delete: (id: string) => requests.del<void>(`/activities/${id}`),
     attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {}),
-    listHomeActivities: (predicate: string) =>  requests.get<Activity[]>(`/activities/GeHomeActivities?predicate=${predicate}`) 
+    listHomeActivities: (predicate: string) =>  requests.get<Activity[]>(`/activities/GetHomeActivities?predicate=${predicate}`) 
 }
 
 const Stripe={

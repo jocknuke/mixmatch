@@ -18,7 +18,7 @@ namespace API.Controllers
         }
         [AllowAnonymous]
          [HttpGet("[action]")]
-        public async Task<IActionResult> GeHomeActivities([FromQuery] string predicate)
+        public async Task<IActionResult> GetHomeActivities([FromQuery] string predicate)
 
         
         {
