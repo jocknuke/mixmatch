@@ -36,6 +36,11 @@ app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+
+app.MapFallbackToController("Index", "Fallback");
 
  StripeConfiguration.ApiKey = "sk_test_51OZmPBJ95Zs7Wt6O5pXHbWVbaCXwAnfWjWkY8fBHmf5ve7z3CMyrhxoLQEscZYX0qQj1ptK9f1Zih8LgyTQS5SgQ00p2TTDEU3";
 

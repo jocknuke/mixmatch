@@ -38,11 +38,11 @@ namespace Application.Activities
        
  var today = DateTime.UtcNow;
 
-Console.WriteLine("#########################");
+
 
 Console.WriteLine(request.Predicate);
 
-Console.WriteLine("#########################");
+
                
 
                 switch (request.Predicate)
