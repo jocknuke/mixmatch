@@ -29,8 +29,16 @@ namespace API.Extensions
                 // connection string, or development connection string from env var.
                 if (env == "Development")
                 {
+
+
+
+               
+
                     // Use connection string from file.
                     connStr = config.GetConnectionString("DefaultConnection");
+
+
+
                 }
                 else
                 {

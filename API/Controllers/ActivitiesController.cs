@@ -22,6 +22,9 @@ namespace API.Controllers
 
         
         {
+             
+                    
+
             
            
              return HandleResult(await Mediator.Send(new ListActivities.Query { Predicate = predicate }));
