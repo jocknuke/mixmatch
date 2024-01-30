@@ -16,6 +16,15 @@ background-image: linear-gradient(to right, #eee7ee 0%, #d5f4f7 100%);
   flex-wrap: wrap;
 }
 
+.ui.button,
+.ui.segment,
+.ui.card, .ui.cards>.card,
+.ui.basic.button {
+
+  border-radius: 0;
+
+}
+
 .react-calendar {
   width: 100%;
   border: none;
