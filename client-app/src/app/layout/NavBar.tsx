@@ -1,11 +1,13 @@
-import {Button, Container, Dropdown, Menu, Image, Grid, Icon} from "semantic-ui-react";
+import {Button, Container, Dropdown, Menu, Image, Grid, Icon, Header} from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
+import RegsiterForm from "../../features/users/RegsiterForm";
 
 export default observer(function NavBar() {
     const {userStore: {user, logout, isLoggedIn}} = useStore();
+    const {  modalStore } = useStore();
 
     type State = {
         dropdownMenuStyle: {
@@ -50,17 +52,17 @@ export default observer(function NavBar() {
 
         <Grid padded className="tablet computer only">
           <Container>
-          <Menu inverted fixed='top'>
+          <Menu inverted fixed='top'>  
             <Container>
-                <Menu.Item as={NavLink} to='/' header>
-                    <img src='/assets/logo.png' alt='logo' style={{marginRight: 10}}/>
-                    Mix And Match
+                <Menu.Item as={NavLink} to='/' header >
+                <Header inverted as='h3'>GameFlow</Header>
+                   
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='/activities' name='Events' />
+                <Menu.Item as={NavLink} to='/activities' name='Find Events' />
                 
-                <Menu.Item>
-                    <Button as={NavLink} to='/createActivity' positive content='Create Event' />
-                </Menu.Item>
+                <Menu.Item as={NavLink} to='/createActivity' name='Create Event'/>
+                  
+                
                 {isLoggedIn ? (
                 <Menu.Item position='right'>
             
@@ -81,8 +83,11 @@ export default observer(function NavBar() {
                     </>
                     </Menu.Item>
                     ):(
-                            
+                        <>   
                       <Menu.Item position='right' as={NavLink} to='/login' name='Login' />
+                      <Menu.Item  onClick={() => modalStore.openModal(<RegsiterForm />)}  name='Register' />
+                      </> 
+
                     
                
  )
@@ -97,7 +102,7 @@ export default observer(function NavBar() {
         <Grid className="mobile only">
           <Menu inverted borderless size="huge" fixed="top">
             <Menu.Item header as="a">
-              Project Name
+            GameFlow
             </Menu.Item>
             <Menu.Menu position="right">
               <Menu.Item>
@@ -120,11 +125,11 @@ export default observer(function NavBar() {
               style={stateMenu.dropdownMenuStyle}
             >
              
-                <Menu.Item as={NavLink} to='/activities' name='Events' />
+                <Menu.Item as={NavLink} to='/activities' name='Find Events' />
                 
-                <Menu.Item>
-                    <Button as={NavLink} to='/createActivity' positive content='Create Event' />
-                </Menu.Item>
+                <Menu.Item as={NavLink} to='/createActivity' name='Create Event'/>
+
+                {isLoggedIn ? (
                 <Menu.Item>
                     <Image avatar spaced='right' src={user?.image || '/assets/user.png'} />
                     <Dropdown pointing='top left' text={user?.displayName}>
@@ -134,6 +139,15 @@ export default observer(function NavBar() {
                         </Dropdown.Menu>
                     </Dropdown>
                 </Menu.Item>
+                ):(
+
+                  <>   
+                  <Menu.Item as={NavLink} to='/login' name='Login' />
+                  <Menu.Item  onClick={() => modalStore.openModal(<RegsiterForm />)}  name='Register' />
+                  </> 
+
+
+                )}
             </Menu>
           </Menu>
         </Grid>

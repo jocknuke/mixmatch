@@ -1,4 +1,4 @@
-import { Segment, List, Label, Item, Image, Feed, Table, Header } from 'semantic-ui-react'
+import { Segment, List, Label, Item, Image, Feed, Table, Header, Checkbox } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { Activity } from '../../app/models/activity'
@@ -50,8 +50,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
     const { mixandmatchStore } = useStore();
 
 
-
-
+  
 
 
     players=getPlayersBoard(mixandmatchStore.games);
@@ -108,7 +107,7 @@ export default observer(function MixAndMatchPlayersSidebar ({activity}: Props) {
                                 <Item.Header >
                                     <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link>
                                 </Item.Header>
-                                
+                   
                             </Item.Content>
                         </Item>
 

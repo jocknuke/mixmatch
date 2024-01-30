@@ -9,6 +9,7 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ActivitiesController : BaseApiController
     {
+          [AllowAnonymous]
          [HttpGet]
         public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
@@ -29,7 +30,7 @@ namespace API.Controllers
            
              return HandleResult(await Mediator.Send(new ListActivities.Query { Predicate = predicate }));
         }
-
+  [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {

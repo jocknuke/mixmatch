@@ -48,7 +48,18 @@ namespace Application.Activities
 
                 request.Activity.Attendees.Add(attendee);
 
+
+                var users =  _context.Users;
+
+              
+
+                 
+
+
                 _context.Activities.Add(request.Activity);
+
+
+                
 
                 var result = await _context.SaveChangesAsync() > 0;
 

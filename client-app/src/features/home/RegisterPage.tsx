@@ -62,8 +62,8 @@ export default observer(function RegisterPage() {
               <Segment  textAlign='center' vertical className='homeloggedin' >
             <Container text>
                 <Header as='h1' inverted>
-                    <Image size='massive' src='/assets/logo.png' alt='logo' style={{ marginBottom: 12 }} />
-                    Mix and match!
+                   
+                    Welcome to GameFlow
                 </Header>
                 <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
                             Login!

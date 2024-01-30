@@ -422,6 +422,8 @@ if(filteredData.length > 0) {
     setSelectAllCourts(event.currentTarget.checked);
   };
 
+  if (!activity.isHost) return (<></>)
+
   return (
     <>
       <Segment  

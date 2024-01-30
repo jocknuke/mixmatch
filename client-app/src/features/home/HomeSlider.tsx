@@ -42,6 +42,7 @@ export default function HomeSlider() {
         width: '50%',
         height: 'auto',
         color: 'white',
+        
         backgroundColor:'#3c373757',
         border:'0',
     };
@@ -72,9 +73,7 @@ export default function HomeSlider() {
               With intuitive navigation and robust functionality, 
               for event planners seeking efficiency and precision in every aspect of event management.
               </p>
-              <Button primary size="huge">
-                Learn more
-              </Button>
+            
             </Container>
               </Segment>
      
@@ -103,9 +102,7 @@ export default function HomeSlider() {
               With intuitive navigation and robust functionality, 
               for event planners seeking efficiency and precision in every aspect of event management.
               </p>
-              <Button primary size="huge">
-                Learn more
-              </Button>
+            
             </Container>
               </Segment>
      
@@ -134,9 +131,7 @@ export default function HomeSlider() {
               With intuitive navigation and robust functionality, 
               for event planners seeking efficiency and precision in every aspect of event management.
               </p>
-              <Button primary size="huge">
-                Learn more
-              </Button>
+             
             </Container>
               </Segment>
      

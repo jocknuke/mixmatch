@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Tab, Grid, Header, Card, Image, TabProps, Button } from 'semantic-ui-react';
+import { Tab, Grid, Header, Card, Image, TabProps, Button, CardContent, CardHeader, CardMeta, CardDescription, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { format } from 'date-fns';
@@ -60,27 +60,36 @@ export default observer(function ActivityHomeTab() {
                     />
                     
                     <br />
-                    <Card.Group itemsPerRow={4}>
+                    <Card.Group >
                         {homeActivities.map((activity: Activity) => (
-                            <Card
-                                as={Link}
+                            <>
+
+
+
+
+<Card   as={Link}
                                 to={`/activities/${activity.id}`}
-                                key={activity.id}
-                            >
-                                <Image
-                                    src={`/assets/categoryImages/${activity.category}.jpg`}
-                                    style={{ minHeight: 100, objectFit: 'cover' }}
-                                />
-                                <Card.Content>
-                                    <Card.Header textAlign='center'>{activity.title}</Card.Header>
-                                    <Card.Meta textAlign='center'>
-                                   
-                                        <div>{format(new Date(activity.date!), 'do LLL')}</div>
+                                key={activity.id}>
+                            <Image  src={`/assets/categoryImages/${activity.category}.jpg`} wrapped ui={false} />
+                            <CardContent>
+                              <CardHeader>{activity.title}</CardHeader>
+                              <CardMeta>  <div>{format(new Date(activity.date!), 'do LLL')}</div>
                                         <div>{format(new Date(activity.date!), 'h:mm a')}</div>
-                                        
-                                    </Card.Meta>
-                                </Card.Content>
-                            </Card>
+                                        </CardMeta>
+                              <CardDescription>
+                              {activity.description}
+                              </CardDescription>
+                            </CardContent>
+                            <CardContent extra>
+                              <a>
+                                <Icon name='user' />
+                                10 following
+                              </a>
+                            </CardContent>
+                          </Card>
+                            
+                            </>
+                           
                         ))}
 
                        
