@@ -70,41 +70,7 @@ export default observer(function HomePage() {
                <HomeSlider/>
       
       <Container>
-      <Segment vertical style={{  marginTop: 25 }}>
-            <Grid container stackable textAlign="center" columns={3}>
-              <Grid.Column>
-              
-              <Header as="h1">Dynamic Teams:</Header>
-              <p  style={{textAlign:'left'}}>
-              
-              Allow event planners to build teams dynamically based on prebuilt sports/special events templates or specific requirements.
-             <br/>Drag-and-drop functionality for easy adjustments.
-             <br/>Real-time score updates 
-                           </p>
-              
-              </Grid.Column>
-              <Grid.Column>
-            
-              <Header as="h1">Communication Hub:</Header>
-              <p style={{textAlign:'left'}}>
-              
-
-              Send invitations, updates, and reminders via email or SMS directly from the system.
-              Instant messaging features for real-time communication during the event.
-                            </p>
-               
-              </Grid.Column>
-              <Grid.Column>
-              
-              <Header as="h1">Create a Community</Header>
-              <p style={{textAlign:'left'}}>
-                Create your own private social network of friends and followers. 
-              </p>
-            
-              
-              </Grid.Column>
-            </Grid>
-          </Segment>
+     
       
      
         <Segment vertical>

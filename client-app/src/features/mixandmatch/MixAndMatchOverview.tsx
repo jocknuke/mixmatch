@@ -104,7 +104,41 @@ export default observer(function MixAndMatchOverview() {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column textAlign="center">
-           
+          <Segment vertical style={{  marginTop: 25 }}>
+            <Grid container stackable textAlign="center" columns={3}>
+              <Grid.Column>
+              
+              <Header as="h1">Dynamic Teams:</Header>
+              <p  style={{textAlign:'left', fontSize: "1.33em"}}>
+              
+              Allow event planners to build teams dynamically based on prebuilt sports/special events templates or specific requirements.
+             <br/>Drag-and-drop functionality for easy adjustments.
+             <br/>Real-time score updates 
+                           </p>
+              
+              </Grid.Column>
+              <Grid.Column>
+            
+              <Header as="h1">Communication Hub:</Header>
+              <p style={{textAlign:'left', fontSize: "1.33em"}}>
+              
+
+              Send invitations, updates, and reminders via email or SMS directly from the system.
+              Instant messaging features for real-time communication during the event.
+                            </p>
+               
+              </Grid.Column>
+              <Grid.Column>
+              
+              <Header as="h1">Create a Community</Header>
+              <p style={{textAlign:'left', fontSize: "1.33em"}}>
+                Create your own private social network of friends and followers. 
+              </p>
+            
+              
+              </Grid.Column>
+            </Grid>
+          </Segment>
 
           </Grid.Column>
         </Grid.Row>
@@ -198,7 +232,7 @@ export default observer(function MixAndMatchOverview() {
         <Header as="h3" style={{ fontSize: "2em" }}>
          The Goal of this application
         </Header>
-        <p style={{ fontSize: "1.33em" }}>
+        <p >
         A learning experience through the integration of cutting-edge technologies. 
         including artificial intelligence, cloud services, innovative software architecture and modern frontend design.
         </p>

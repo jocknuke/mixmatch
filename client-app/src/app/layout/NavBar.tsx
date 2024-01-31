@@ -70,7 +70,7 @@ export default observer(function NavBar() {
               
               <Dropdown pointing='top right' text='Help'>
                   <Dropdown.Menu>
-                      <Dropdown.Item as={Link} to='/overview/mixandmatch' text='Mix and match template Overview'  />
+                      <Dropdown.Item as={Link} to='/overview/mixandmatch' text='Showcase'  />
                       <Divider></Divider>
                       <Dropdown.Item as={Link} to='/contact' text='Leave your feedback'  />
 
@@ -151,6 +151,11 @@ export default observer(function NavBar() {
                 <Menu.Item as={NavLink} to='/activities' name='Find Events' />
                 
                 <Menu.Item as={NavLink} to='/createActivity' name='Create Event'/>
+
+                <Menu.Item  as={Link} to='/overview/mixandmatch' text='Showcase'  />
+                      
+                <Menu.Item  as={Link} to='/contact' text='Leave your feedback'  />
+               
 
                 {isLoggedIn ? (
                 <Menu.Item>
