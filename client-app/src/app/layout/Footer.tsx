@@ -1,23 +1,23 @@
 import { NavLink } from "react-router-dom";
 import { Container, Divider, Grid, Header, List, Segment } from "semantic-ui-react";
 
+import "semantic-ui-css/semantic.min.css";
 
 export default function Footer() {
    
     return (
 
-      <>
+   
 
 
 
-
-
-        <Segment inverted vertical style={{ marginTop: '5em' }}>
+<div style={{marginTop:'auto'}}>
+<Segment inverted vertical  >
 
     
 <Container>
 
-  <Grid divided inverted stackable>
+  <Grid divided inverted stackable >
   
   <Grid.Row>
   <Grid.Column width={16}>
@@ -41,16 +41,20 @@ export default function Footer() {
           <List.Item as={NavLink} to='/contact'>Contact Us</List.Item>
        
         </List>
+       
       </Grid.Column>
      
       
     </Grid.Row>
   </Grid>
 </Container>
+
+
 </Segment>
+        </div>
+
+
       
-      
-      </>
 
 
 

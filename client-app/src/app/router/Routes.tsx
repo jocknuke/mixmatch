@@ -13,6 +13,7 @@ import RequireAuth from "./RequireAuth";
 import RegisterPage from "../../features/home/RegisterPage";
 import MixAndMatchOverview from "../../features/mixandmatch/MixAndMatchOverview";
 import FeedbackForm from "../../features/home/FeedbackForm";
+import CreateActivity from "../../features/activities/form/CreateActivity";
 
 export const routes: RouteObject[] = [
     {
@@ -23,8 +24,8 @@ export const routes: RouteObject[] = [
             {element: <RequireAuth />, children: [
                
                 
-                {path: 'createActivity', element: <ActivityForm key='create' />},
-                {path: 'manage/:id', element: <ActivityForm key='manage' />},
+                {path: 'createActivity', element: <CreateActivity key='create' />},
+                {path: 'manage/:id', element: <CreateActivity key='manage' />},
                 {path: 'profiles/:username', element: <ProfilePage />},
                 {path: 'errors', element: <TestErrors />},
                 {path: 'manage/games/', element: <MixAndMatchEditRoundDetails key='edit' />}

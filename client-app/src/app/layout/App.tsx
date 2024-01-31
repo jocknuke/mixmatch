@@ -53,12 +53,12 @@ const Message: FC<MessageProps> = ({ message }) => (
         </>
       ):(<>
           
-        <Container style={{ marginTop: '5em' }}>
+        <Container style={{ marginTop: '5em', padingBottom:'50em' }}>
           <Outlet />
          
         </Container>
       </>)}
-
+   
   <Footer/>
 
   

@@ -28,6 +28,7 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Console } from "console";
 import { Profile } from "../../../app/models/profile";
+import { toast } from "react-toastify";
 
 interface Props {
   activity: Activity;
@@ -91,6 +92,12 @@ export default observer(function MixAndMatchForm({ activity }: Props) {
   topPlayers=getPlayersBoard(mixandmatchStore.games);
 
   const handleAddRound = () => {
+
+    if(people.length<4){
+
+      toast.error('Not enough players');
+      return
+    }
     const courtsToPlay = courts.filter((x) => x.checked == true);
     const roundType = roundTypes.find((x) => x.checked == true);
 
