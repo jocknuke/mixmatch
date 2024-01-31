@@ -1,4 +1,4 @@
-import { Container } from 'semantic-ui-react';
+import { Container, Grid, Segment } from 'semantic-ui-react';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
@@ -55,8 +55,11 @@ const Message: FC<MessageProps> = ({ message }) => (
           
         <Container style={{ marginTop: '5em' }}>
           <Outlet />
+         
         </Container>
       </>)}
+
+  <Footer/>
 
   
     </>

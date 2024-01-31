@@ -163,8 +163,11 @@ style={{ border: 'none' }}
 
   <Segment color='teal' inverted>  
     
-  
-      <Dropdown  icon='setting' >
+  {activity.isHost && (
+
+
+
+<Dropdown  icon='setting' >
         <DropdownMenu>
           
           <DropdownItem as={NavLink} to={`/manage/games?activityid=${activity.id}&roundid=${group}`} name='Edit Games' >Edit</DropdownItem>
@@ -173,6 +176,16 @@ style={{ border: 'none' }}
          
         </DropdownMenu>
       </Dropdown>
+
+
+  )
+  
+  
+  
+  
+  
+  }
+      
 
      
    

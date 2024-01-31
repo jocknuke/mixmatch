@@ -11,6 +11,8 @@ import App from "../layout/App";
 import MixAndMatchEditRoundDetails from "../../features/mixandmatch/dragndrop/MixAndMatchEditRoundDetails";
 import RequireAuth from "./RequireAuth";
 import RegisterPage from "../../features/home/RegisterPage";
+import MixAndMatchOverview from "../../features/mixandmatch/MixAndMatchOverview";
+import FeedbackForm from "../../features/home/FeedbackForm";
 
 export const routes: RouteObject[] = [
     {
@@ -28,6 +30,8 @@ export const routes: RouteObject[] = [
                 {path: 'manage/games/', element: <MixAndMatchEditRoundDetails key='edit' />}
             ]},
             {path: 'activities/:id', element: <ActivityDetails />},
+            {path: 'overview/mixandmatch', element: <MixAndMatchOverview />},
+            {path: 'contact', element: <FeedbackForm />},
             {path: 'activities', element: <ActivityDashboard />},
             {path: 'login', element: <LoginForm />},
             {path: 'register', element: <RegisterPage />},

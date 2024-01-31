@@ -26,6 +26,11 @@ export default observer(function ActivityFilters() {
                     active={predicate.has('isHost')}
                     onClick={() => setPredicate('isHost', 'true')}
                 />
+                <Menu.Item
+                    content="Mix And Match"
+                    active={predicate.has('isMixAndMatch')}
+                    onClick={() => setPredicate('isMixAndMatch', 'true')}
+                />
             </Menu>
             <Header />
             <Calendar

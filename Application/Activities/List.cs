@@ -45,6 +45,11 @@ namespace Application.Activities
                 {
                     query = query.Where(x => x.HostUsername == _userAccessor.GetUsername());
                 }
+                if (request.Params.IsMixAndMatch)
+                {
+                    query = query.Where(x => x.Category =="mixandmatch" );
+                }
+
 
                 return Result<PagedList<ActivityDto>>
                     .Success(await PagedList<ActivityDto>.CreateAsync(query,

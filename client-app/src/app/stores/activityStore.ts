@@ -56,6 +56,10 @@ export default class ActivityStore {
                 this.predicate.delete('startDate');
                 this.predicate.set('startDate', value);
                 break;
+            case 'isMixAndMatch':
+                resetPredicate();
+                    this.predicate.set('isMixAndMatch', value);
+                    break;
         }
     }
 

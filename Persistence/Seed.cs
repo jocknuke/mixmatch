@@ -21,6 +21,14 @@ namespace Persistence
                          Gender="M"
                     },
 
+                    new AppUser
+                    {
+                        DisplayName = "Demo Account",
+                        UserName = "demoaccount",
+                        Email = "demoaccount@test.com",
+                         Gender="M"
+                    },
+
    
                     new AppUser
                     {
@@ -460,56 +468,98 @@ namespace Persistence
                      var attendee= new ActivityAttendee
                             {
                                 AppUser = user,
-                                IsHost = true
+                                IsHost = false
                             };
+
+                            if(user.UserName=="jonhonor"){
+                            attendee.IsHost=true;
+                              
+                            }
+
+                    
+
                     AllAttendees.Add(attendee);
 
                 }
 
+                var host = AllAttendees.FirstOrDefault(x=>x.IsHost);
+                if(host==null)
+                AllAttendees[0].IsHost=true;
+
                  foreach (var user in users)
                 {
                      var attendee= new ActivityAttendee
                             {
                                 AppUser = user,
-                                IsHost = true
+                                IsHost = false
                             };
+                             if(user.UserName=="demoaccount"){
+                            attendee.IsHost=true;
+                              
+                            }
                     AllAttendees2.Add(attendee);
 
                 }
+                 var host2 = AllAttendees2.FirstOrDefault(x=>x.IsHost);
+                if(host2==null)
+                AllAttendees[0].IsHost=true;
 
                  foreach (var user in users)
                 {
                      var attendee= new ActivityAttendee
                             {
                                 AppUser = user,
-                                IsHost = true
+                                IsHost = false
                             };
+                             if(user.UserName=="jonhonor"){
+                            attendee.IsHost=true;
+                              
+                            }
                     AllAttendees3.Add(attendee);
 
                 }
+                 var host3 = AllAttendees.FirstOrDefault(x=>x.IsHost);
+                if(host3==null)
+                AllAttendees3[0].IsHost=true;
 
                  foreach (var user in users)
                 {
                      var attendee= new ActivityAttendee
                             {
                                 AppUser = user,
-                                IsHost = true
+                                IsHost = false
                             };
+                             if(user.UserName=="demoaccount"){
+                            attendee.IsHost=true;
+                              
+                            }
+
                     AllAttendees4.Add(attendee);
 
                 }
 
+                 var host4 = AllAttendees.FirstOrDefault(x=>x.IsHost);
+                if(host4==null)
+                AllAttendees4[0].IsHost=true;
+
 
                  foreach (var user in users)
                 {
                      var attendee= new ActivityAttendee
                             {
                                 AppUser = user,
-                                IsHost = true
+                                IsHost = false
                             };
+                             if(user.UserName=="demoaccount"){
+                            attendee.IsHost=true;
+                              
+                            }
                     AllAttendees5.Add(attendee);
 
                 }
+                 var host5 = AllAttendees.FirstOrDefault(x=>x.IsHost);
+                if(host5==null)
+                AllAttendees5[0].IsHost=true;
 
 
                
@@ -541,7 +591,7 @@ namespace Persistence
                         Category = "mixandmatch",
                         City = "Charlotte",
                         Venue = "CUVC",
-                        Attendees = AllAttendees5.Take(47).ToList()
+                        Attendees = AllAttendees5.ToList()
                     },
                     new Activity
                     {
@@ -584,7 +634,7 @@ namespace Persistence
                         Category = "soccer",
                         City = "London",
                         Venue = "Wembly Stadium",
-                        Attendees = AllAttendees3.Take(54).ToList()
+                        Attendees = AllAttendees3.ToList()
                     },
                    
                     new Activity
@@ -617,7 +667,7 @@ namespace Persistence
                         Category = "volleyball",
                         City = "Charlotte",
                         Venue = "CUVC",
-                        Attendees = AllAttendees4.Take(49).ToList()
+                        Attendees = AllAttendees4.ToList()
                     },
                    
                   

@@ -1,4 +1,4 @@
-import {Button, Container, Dropdown, Menu, Image, Grid, Icon, Header} from "semantic-ui-react";
+import {Button, Container, Dropdown, Menu, Image, Grid, Icon, Header, Divider} from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
@@ -61,7 +61,29 @@ export default observer(function NavBar() {
                 <Menu.Item as={NavLink} to='/activities' name='Find Events' />
                 
                 <Menu.Item as={NavLink} to='/createActivity' name='Create Event'/>
-                  
+
+
+
+                <Menu.Item >
+            
+            <>
+              
+              <Dropdown pointing='top right' text='Help'>
+                  <Dropdown.Menu>
+                      <Dropdown.Item as={Link} to='/overview/mixandmatch' text='Mix and match template Overview'  />
+                      <Divider></Divider>
+                      <Dropdown.Item as={Link} to='/contact' text='Leave your feedback'  />
+
+                     
+                   
+                     
+                     
+                     
+                  </Dropdown.Menu>
+              </Dropdown>
+              
+              </>
+              </Menu.Item>
                 
                 {isLoggedIn ? (
                 <Menu.Item position='right'>
@@ -92,6 +114,7 @@ export default observer(function NavBar() {
                
  )
 }
+
 
 
                

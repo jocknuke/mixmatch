@@ -70,18 +70,18 @@ export default observer(function HomePage() {
                <HomeSlider/>
       
       <Container>
-      <Segment vertical>
+      <Segment vertical style={{  marginTop: 25 }}>
             <Grid container stackable textAlign="center" columns={3}>
               <Grid.Column>
               
               <Header as="h1">Dynamic Teams:</Header>
-              <p style={{textAlign:'left'}}>
+              <p  style={{textAlign:'left'}}>
               
-
-              Send invitations, updates, and reminders via email or SMS directly from the system.
-              Instant messaging features for real-time communication during the event.
-                            </p>
-                <Button basic>View details &raquo;</Button>
+              Allow event planners to build teams dynamically based on prebuilt sports/special events templates or specific requirements.
+             <br/>Drag-and-drop functionality for easy adjustments.
+             <br/>Real-time score updates 
+                           </p>
+              
               </Grid.Column>
               <Grid.Column>
             
@@ -92,7 +92,7 @@ export default observer(function HomePage() {
               Send invitations, updates, and reminders via email or SMS directly from the system.
               Instant messaging features for real-time communication during the event.
                             </p>
-                <Button basic>View details &raquo;</Button>
+               
               </Grid.Column>
               <Grid.Column>
               
@@ -101,7 +101,7 @@ export default observer(function HomePage() {
                 Create your own private social network of friends and followers. 
               </p>
             
-                <Button basic>View details &raquo;</Button>
+              
               </Grid.Column>
             </Grid>
           </Segment>
@@ -110,17 +110,17 @@ export default observer(function HomePage() {
         <Segment vertical>
         <ActivityHomeTab  />
         </Segment>
-        <Segment vertical>
-          <Grid columns={2}>
-            <Grid.Column>
-              &copy; 2017 Company, Inc. · <a href="#root">Privacy</a> ·{" "}
-              <a href="#root">Terms</a>
-            </Grid.Column>
-            <Grid.Column textAlign="right">
-              <a href="#root">Back to top</a>
-            </Grid.Column>
-          </Grid>
+
+        <Segment basic>
+        <Header as="h3" style={{ fontSize: "2em" }}>
+         The goal of this demo application
+        </Header>
+        <p style={{ fontSize: "1.33em" }}>
+        A learning experience through the integration of cutting-edge technologies. 
+        including artificial intelligence, cloud services, innovative software architecture and modern frontend design.
+        </p>
         </Segment>
+      
       </Container>
    
             </>

@@ -79,6 +79,7 @@ export default observer(function ActivityDetails() {
           
          
           <MixAndMatchForm activity={activity}/>
+          <MixAndMatchPlayersSidebar activity={activity}/>
 
           <MixAndMatchAttendeesSidebar activity={activity}/>
         </>
@@ -92,6 +93,7 @@ export default observer(function ActivityDetails() {
 
 
             </Grid.Column>
+           
         </Grid>
     )
 })

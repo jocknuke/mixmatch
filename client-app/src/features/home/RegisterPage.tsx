@@ -1,20 +1,16 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Container, Header, Segment, Image, Grid, Menu, Dropdown, Icon } from "semantic-ui-react";
+
+
+import { Button, Container, Header, Segment } from "semantic-ui-react";
 import { useStore } from '../../app/stores/store';
 import LoginForm from '../users/LoginForm';
 import RegsiterForm from '../users/RegsiterForm';
 
 
-import ProfileContent from '../profiles/ProfileContent';
-import ActivityHomeTab from '../activities/dashboard/ActivityHomeTab';
-import Slider from "react-slick";
-import HomeSlider from './HomeSlider';
 import "semantic-ui-css/semantic.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import NavBar from '../../app/layout/NavBar';
+
 
 import bg from '../../app/layout/images/beachvolleyball.jpg';
 const bgStyle = {
@@ -29,17 +25,7 @@ const bgStyle = {
 
 };
 
-const bgActivitiesStyle={
 
-    backgroundImage: `linear-gradient( 109.6deg, rgba(156,252,248,1) 11.2%, rgba(110,123,251,1) 91.1% )`
-}
-
-
-const textStyle = {
-    filter: 'brightness(100%)',
-   
-
-};
 
 
 
