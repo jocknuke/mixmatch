@@ -78,6 +78,8 @@ export default class ActivityStore {
     }
 
     get groupedActivities() {
+
+      
         return Object.entries(
             this.activitiesByDate.reduce((activities, activity) => {
                 const date = activity.date!.toISOString().split('T')[0];
@@ -95,8 +97,12 @@ export default class ActivityStore {
 
     loadActivities = async () => {
         this.loadingInitial = true;
+
+        
         try {
             const result = await agent.Activities.list(this.axiosParams);
+
+           
             result.data.forEach(activity => {
                 this.setActivity(activity);
             })
@@ -109,10 +115,12 @@ export default class ActivityStore {
     }
 
     loadHomeActivities = async (predicate?: string) => {
+        console.log('LOADING HOME ACTIVITIES');
+        
         this.loadingInitial = true;
         try {
             const activities = await agent.Activities.listHomeActivities(predicate!);
-            console.log(JSON.stringify(activities))
+           
             runInAction(() => {
                 this.homeActivities = activities;
                 this.loadingInitial = false;
@@ -151,16 +159,25 @@ export default class ActivityStore {
     }
 
     private setActivity = (activity: Activity) => {
+
+       
+        
+        
         const user = store.userStore.user;
         if (user) {
             activity.isGoing = activity.attendees!.some(
                 a => a.username === user.username
             );
             activity.isHost = activity.hostUsername === user.username;
-            activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
+            
         }
+        
+        activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
+       
         activity.date = new Date(activity.date!);
         this.activityRegistry.set(activity.id, activity);
+
+        
     }
 
     private getActivity = (id: string) => {

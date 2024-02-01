@@ -1,4 +1,4 @@
-import { Segment } from "semantic-ui-react";
+import { Header, Segment } from "semantic-ui-react";
 
 const divStyle = {
     
@@ -22,6 +22,15 @@ export default function FeedbackForm() {
 
 <div style={divStyle}>
 
+<Segment basic>
+        <Header as="h3" style={{ fontSize: "2em" }}>
+         This this a demo application in beta
+        </Header>
+        <p style={{ fontSize: "1em" }}>
+        A learning experience through the integration of cutting-edge technologies. 
+        including artificial intelligence, cloud services, innovative software architecture and modern frontend design.
+        </p>
+        </Segment>
       <Segment >
 
 

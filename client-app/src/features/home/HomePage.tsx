@@ -77,15 +77,7 @@ export default observer(function HomePage() {
         <ActivityHomeTab  />
         </Segment>
 
-        <Segment basic>
-        <Header as="h3" style={{ fontSize: "2em" }}>
-         The goal of this demo application
-        </Header>
-        <p style={{ fontSize: "1.33em" }}>
-        A learning experience through the integration of cutting-edge technologies. 
-        including artificial intelligence, cloud services, innovative software architecture and modern frontend design.
-        </p>
-        </Segment>
+       
       
       </Container>
    

@@ -5,47 +5,48 @@ import "semantic-ui-css/semantic.min.css";
 
 export default function Footer() {
    
+
+ 
+
+
     return (
 
    
 
 
 
-<div style={{marginTop:'auto'}}>
-<Segment inverted vertical  >
+<div  style={{marginTop:'auto'}}>
+<Segment  className="footer"  >
 
     
-<Container>
+<Container >
 
   <Grid divided inverted stackable >
   
   <Grid.Row>
   <Grid.Column width={16}>
-  <Segment  vertical>
-          <Grid columns={2}>
-            <Grid.Column>
+  
+          <Grid columns={1}>
             
-            </Grid.Column>
-            <Grid.Column textAlign="right">
-              <a href="#root">Back to top</a>
+            <Grid.Column  textAlign="right">
+              <a style={{color:'white'}} href="#root">Back to top</a>
             </Grid.Column>
           </Grid>
-        </Segment>
+       
         </Grid.Column>
-  </Grid.Row>
-    <Grid.Row>
-      <Grid.Column width={3}>
+
+        <Grid.Column width={3}>
         <Header inverted as='h4' content='About' />
-        <List link inverted>
+        <List link horizontal inverted>
        
           <List.Item as={NavLink} to='/contact'>Contact Us</List.Item>
        
         </List>
        
       </Grid.Column>
-     
-      
-    </Grid.Row>
+
+  </Grid.Row>
+    
   </Grid>
 </Container>
 

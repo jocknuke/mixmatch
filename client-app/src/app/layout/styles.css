@@ -230,3 +230,9 @@ html, body, #root {
   display: flex;
   flex-direction: column;
  }
+
+ .footer {
+
+  background-image: linear-gradient(135deg, rgb(105, 13, 192) 0%, rgb(33, 138, 174) 69%, rgb(32, 167, 172) 89%) !important;
+
+ }
